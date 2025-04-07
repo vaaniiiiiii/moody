@@ -1,2 +1,2 @@
 Nama: Vanisa Yunia Anggraini
-NIML 607062300066
+NIM: 607062300066
