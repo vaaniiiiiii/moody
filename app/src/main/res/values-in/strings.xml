@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">moody</string>
-    <string name="intro_moody">Moody, mencatat mood harianmu!</string>
+    <string name="intro_moody">Moody, mencatat mood harianmu! sedih: 0-49%, netral: 50-75%, senang: 76-100%</string>
     <string name="tambah_catatan">Tambah Catatan</string>
     <string name="persenan_mood">Persenan Mood</string>
-    <string name="sedih">Sedih</string>
-    <string name="netral">Netral</string>
-    <string name="senang">Senang</string>
+    <string name="sport">Sport</string>
+    <string name="relaxed">Relaxed</string>
     <string name="cek_kegiatan">Cek Kegiatan</string>
 </resources>

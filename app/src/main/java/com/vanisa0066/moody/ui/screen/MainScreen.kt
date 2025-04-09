@@ -42,8 +42,8 @@ import com.vani0066.moody.ui.theme.MoodyTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(){
-    Scaffold (
+fun MainScreen() {
+    Scaffold(
         topBar = {
             TopAppBar(
                 title = {
@@ -59,25 +59,28 @@ fun MainScreen(){
         ScreenContent(Modifier.padding(innerPadding))
     }
 }
+
 @Composable
-fun ScreenContent(modifier: Modifier = Modifier){
+fun ScreenContent(modifier: Modifier = Modifier) {
     var tambahCatatan by rememberSaveable { mutableStateOf("") }
     var persenanMood by rememberSaveable { mutableStateOf("") }
+    var hasilKegiatan by rememberSaveable { mutableStateOf("") }
+
 
     val radioOptions = listOf(
-        stringResource(id= R.string.sedih),
-        stringResource(id= R.string.netral),
-        stringResource(id= R.string.senang)
+        stringResource(id = R.string.sport),
+        stringResource(id = R.string.relaxed)
     )
     var mood by rememberSaveable { mutableStateOf(radioOptions[0]) }
 
-    Column (
-        modifier = modifier.fillMaxSize()
+    Column(
+        modifier = modifier
+            .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
         Text(
             text = stringResource(id = R.string.intro_moody),
             style = MaterialTheme.typography.bodyLarge,
@@ -85,7 +88,7 @@ fun ScreenContent(modifier: Modifier = Modifier){
         )
         OutlinedTextField(
             value = tambahCatatan,
-            onValueChange = { tambahCatatan = it},
+            onValueChange = { tambahCatatan = it },
             label = { Text(text = stringResource((R.string.tambah_catatan))) },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
@@ -97,60 +100,95 @@ fun ScreenContent(modifier: Modifier = Modifier){
         OutlinedTextField(
             value = persenanMood,
             onValueChange = { persenanMood = it },
-            label = { Text(text = stringResource(R.string.persenan_mood)) },
+            label = { Text(text = stringResource((R.string.persenan_mood))) },
             trailingIcon = { Text(text = "%") },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Done
+                imeAction = ImeAction.Next
             ),
             modifier = Modifier.fillMaxWidth()
         )
-       Row (
-           modifier = Modifier
-               .padding(top = 6.dp)
-               .border(1.dp, Color.Gray, RoundedCornerShape(4.dp))
-       ){
-           radioOptions.forEach{ text ->
-               MoodOption(
-                   label = text,
-                   isSelected = mood == text,
-                   modifier = Modifier
-                       .selectable(
-                           selected = mood == text,
-                           onClick = { mood = text},
-                           role = Role.RadioButton
-                       )
-                       .weight(1f)
-                       .padding(16.dp)
-               )
-           }
-           Button(
-                onClick = {},
-               modifier = Modifier.padding(top = 8.dp),
-               contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
-           ) {
-               Text(text = stringResource(R.string.cek_kegiatan))
-           }
-       }
+        Row(
+            modifier = Modifier
+                .padding(top = 6.dp)
+                .border(1.dp, Color.Gray, RoundedCornerShape(4.dp))
+        ) {
+            radioOptions.forEach { text ->
+                MoodOption(
+                    label = text,
+                    isSelected = mood == text,
+                    modifier = Modifier
+                        .selectable(
+                            selected = mood == text,
+                            onClick = { mood = text },
+                            role = Role.RadioButton
+                        )
+                        .weight(1f)
+                        .padding(16.dp)
+                )
+            }
+
         }
-    }
-    @Composable
-    fun MoodOption (label: String, isSelected: Boolean, modifier: Modifier) {
-        Row (
-            modifier = modifier,
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            RadioButton(selected = isSelected, onClick = null)
-            Text(
-                text = label,
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(start = 8.dp)
-            )
+        Button(
+            onClick = {
+                val moodValue = persenanMood.toIntOrNull()
+                hasilKegiatan = if (moodValue != null && moodValue in 0..100) {
+                    if (moodValue >= 60 && mood == radioOptions[0]) {
+                        "kamu sedang senang, Olahraga di rumah adalah hal yang paling pas di saat mood bagus! :)"
+                    } else if (moodValue >= 60 && mood == radioOptions[1]) {
+                        "kamu sedang senang, Menonton film komedi adalah kegiatan yang mempertahankan moodmu!"
+                    } else if (moodValue < 60 && mood == radioOptions[0]) {
+                        "Badminton"
+                    } else {
+                        "Pergi ke pantai"
+                    }
+                } else {
+                    "Masukkan mood 0–100"
+                }
+            },
+
+            modifier = Modifier.padding(top = 8.dp),
+            contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp),
+
+        ) {
+            Text(text = stringResource(R.string.cek_kegiatan))
         }
+        if (hasilKegiatan.isNotEmpty()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 32.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = hasilKegiatan,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+            }
+        }
+
+
     }
 
 
+}
+
+@Composable
+fun MoodOption(label: String, isSelected: Boolean, modifier: Modifier) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        RadioButton(selected = isSelected, onClick = null)
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.padding(start = 8.dp)
+        )
+    }
+}
 
 
 @Preview(showBackground = true)
@@ -158,6 +196,6 @@ fun ScreenContent(modifier: Modifier = Modifier){
 @Composable
 fun MainScreenPreview() {
     MoodyTheme {
-       MainScreen()
+        MainScreen()
     }
 }
