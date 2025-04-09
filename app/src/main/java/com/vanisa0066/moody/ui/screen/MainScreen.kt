@@ -31,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.ImeAction
@@ -72,7 +73,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
         stringResource(id = R.string.relaxed)
     )
     var mood by rememberSaveable { mutableStateOf(radioOptions[0]) }
-
+    val context = LocalContext.current
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -132,26 +133,27 @@ fun ScreenContent(modifier: Modifier = Modifier) {
         }
         Button(
             onClick = {
+
                 val moodValue = persenanMood.toIntOrNull()
                 hasilKegiatan = if (moodValue != null && moodValue in 0..100) {
                     if (moodValue >= 60 && mood == radioOptions[0]) {
-                        "kamu sedang senang, Olahraga di rumah adalah hal yang paling pas di saat mood bagus! :)"
+                        context.getString(R.string.olahraga_rumah)
                     } else if (moodValue >= 60 && mood == radioOptions[1]) {
-                        "kamu sedang senang, Menonton film komedi adalah kegiatan yang mempertahankan moodmu!"
+                        context.getString(R.string.nonton_film)
                     } else if (moodValue < 60 && mood == radioOptions[0]) {
-                        "Badminton"
+                        context.getString(R.string.badminton)
                     } else {
-                        "Pergi ke pantai"
+                        context.getString(R.string.pantai)
                     }
                 } else {
-                    "Masukkan mood 0–100"
+                    context.getString(R.string.pesan_error)
                 }
             },
 
             modifier = Modifier.padding(top = 8.dp),
             contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp),
 
-        ) {
+            ) {
             Text(text = stringResource(R.string.cek_kegiatan))
         }
         if (hasilKegiatan.isNotEmpty()) {
