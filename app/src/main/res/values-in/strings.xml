@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">moody</string>
+    <string name="intro_moody">Moody, mencatat mood harianmu!</string>
+    <string name="tambah_catatan">Tambah Catatan</string>
+    <string name="persenan_mood">Persenan Mood</string>
+    <string name="sedih">Sedih</string>
+    <string name="netral">Netral</string>
+    <string name="senang">Senang</string>
+    <string name="cek_kegiatan">Cek Kegiatan</string>
 </resources>

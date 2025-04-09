@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">moody</string>
+    <string name="intro_moody">Moody, Record Your Daily Mood!</string>
+    <string name="tambah_catatan">Add Notes</string>
+    <string name="persenan_mood">Mood Percentage</string>
+    <string name="sedih">Sad</string>
+    <string name="netral">Neutral</string>
+    <string name="senang">Happy</string>
+    <string name="cek_kegiatan">Check Activities</string>
 </resources>
