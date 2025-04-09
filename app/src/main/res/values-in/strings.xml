@@ -20,4 +20,5 @@
         Menulis catatan harian singkat
         Memasukkan mood dalam bentuk persentase (0–100%)\n\n
         Memilih tipe kegiatan (Sport / Relax) Aplikasi ini mendukung 2 bahasa (Indonesia dan Inggris), serta dapat berjalan dalam mode terang dan gelap.</string>
+    <string name="kembali">Kembali</string>
 </resources>

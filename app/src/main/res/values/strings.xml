@@ -18,4 +18,5 @@
         Users can:
         Write a short diary
         Enter mood as a percentage (0–100%)\n\nChoose the type of activity (Sport / Relax) The app supports 2 languages (Indonesia dan english), and can run in light and dark modes.</string>
+    <string name="kembali">Back</string>
 </resources>
