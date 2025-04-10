@@ -49,10 +49,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.vani0066.moody.R
 import com.vani0066.moody.ui.theme.MoodyTheme
+import com.vanisa0066.moody.model.Suasana
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(navController: NavHostController) {
+val data = listOf(
+    Suasana("sedih", R.drawable.sedih),
+    Suasana("senang", R.drawable.senang),
+)
     Scaffold(
         topBar = {
             TopAppBar(
@@ -151,8 +156,8 @@ fun ScreenContent(modifier: Modifier = Modifier) {
                         .padding(16.dp)
                 )
             }
-
         }
+
         val isInputValid = persenanMood.isNotBlank() &&
                 persenanMood.toIntOrNull() in 0..100 &&
                 mood.isNotBlank()
