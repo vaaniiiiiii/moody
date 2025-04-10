@@ -2,6 +2,8 @@ package com.vanisa0066.moody.ui.screen
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -48,9 +50,13 @@ fun AboutScreen(navController: NavHostController) {
             )
         }
     ) { innerPadding ->
+
         Text(
             text = stringResource(R.string.copyright),
-            modifier = Modifier.padding(innerPadding).padding(16.dp)
+            modifier = Modifier.padding(innerPadding)
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState())
+
         )
     }
 }

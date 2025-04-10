@@ -1,6 +1,8 @@
 package com.vanisa0066.moody.ui.screen
 
 import Screen
+import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -62,7 +64,7 @@ fun MainScreen(navController: NavHostController) {
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.primary,
 
-                ),
+                    ),
                 actions = {
                     IconButton(onClick = {
                         navController.navigate(Screen.About.route)
@@ -151,6 +153,9 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             }
 
         }
+        val isInputValid = persenanMood.isNotBlank() &&
+                persenanMood.toIntOrNull() in 0..100 &&
+                mood.isNotBlank()
         Button(
             onClick = {
 
@@ -169,7 +174,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
                     context.getString(R.string.pesan_error)
                 }
             },
-
+            enabled = isInputValid,
             modifier = Modifier.padding(top = 8.dp),
             contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp),
 
@@ -188,13 +193,38 @@ fun ScreenContent(modifier: Modifier = Modifier) {
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.primary,
                 )
+                    Button(
+                        onClick = {
+                            val moody = persenanMood.toIntOrNull() ?: 0
+                            val kategori = if (mood >= 60.toString()) R.string.sport else R.string.relaxed
+                            val saran = hasilKegiatan
+
+                            val shareText = context.getString(
+                                R.string.bagikan_template,
+                                moody,
+                                context.getString(kategori).uppercase(),
+                                saran
+                            )
+                            shareData(context, shareText)
+                        },
+                        modifier = Modifier.padding(top = 8.dp),
+                        contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
+                    ) {
+                        Text(text = stringResource(R.string.bagikan))
+                    }
+                }
             }
         }
-
-
     }
 
-
+private fun shareData(context: Context, message: String){
+    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, message)
+    }
+    if (shareIntent.resolveActivity(context.packageManager) != null){
+        context.startActivity(shareIntent)
+    }
 }
 
 @Composable

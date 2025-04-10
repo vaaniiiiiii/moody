@@ -3,22 +3,33 @@
     <string name="app_name">moody</string>
     <string name="intro_moody">Moody, mencatat mood harianmu! sedih: 0-60%,
         senang: 61-100%</string>
-    <string name="tambah_catatan">Tambah Catatan</string>
+    <string name="tambah_catatan">Tambah Catatan(opsional)</string>
     <string name="persenan_mood">Persenan Mood</string>
-    <string name="sport">Sport</string>
-    <string name="relaxed">Relaxed</string>
+    <string name="sport">Olahraga</string>
+    <string name="relaxed">Santai</string>
     <string name="olahraga_rumah">kamu sedang senang, Olahraga di rumah adalah hal yang paling pas di saat mood bagus! :)</string>
     <string name="nonton_film">kamu sedang senang, Menonton film komedi adalah kegiatan yang mempertahankan moodmu!</string>
     <string name="badminton">lagi sedih ya? ayo Badminton, lampiasin dan keluarin keringet kamu! jangan lupa istirahat dan minum air putih :D</string>
     <string name="pantai">lagi sedih ya? Pergi ke pantai yuk biar otak makin relax^^</string>
     <string name="pesan_error">Masukkan nilai mood antara 0 sampai 100</string>
     <string name="cek_kegiatan">Cek Kegiatan</string>
-    <string name="tentang_aplikasi">About Application</string>
+    <string name="tentang_aplikasi">Tentang Aplikasi</string>
+    <string name="bagikan">Bagikan</string>
+    <string name="bagikan_template">
+        Mood: %1$d%%\nKategori: %2$s\n\nSaran kegiatan: %3$s</string>
     <string name="copyright"> Deskripsi Aplikasi: Moody – Mood dan Activity Helper\n
-        Moody adalah aplikasi sederhana yang membantu pengguna mencatat mood harian dan memberikan rekomendasi kegiatan berdasarkan persentase mood dan preferensi aktivitas.
-        Pengguna dapat:
+        Moody adalah aplikasi sederhana yang membantu pengguna mencatat mood harian dan\nmemberikan rekomendasi kegiatan berdasarkan persentase mood dan preferensi aktivitas.
+        Pengguna dapat:\n
         Menulis catatan harian singkat
         Memasukkan mood dalam bentuk persentase (0–100%)\n\n
-        Memilih tipe kegiatan (Sport / Relax) Aplikasi ini mendukung 2 bahasa (Indonesia dan Inggris), serta dapat berjalan dalam mode terang dan gelap.</string>
+        Memilih tipe kegiatan (Sport / Relax) Aplikasi ini mendukung 2 bahasa (Indonesia dan Inggris)\nserta dapat berjalan dalam mode terang dan gelap.\n\n
+         Fitur Unggulan:\n\n
+        1.Cek Mood Harian\n
+        Pengguna dapat mengisi presentase mood mereka setiap hari dan menambahkan catatan pribadi untuk mencatat perasaan atau kejadian penting hari itu.\n
+        2.Rekomendasi Kegiatan Otomatis\n
+        Berdasarkan mood dan preferensi aktivitas (aktif seperti olahraga, atau santai seperti hiburan), Moody memberikan saran kegiatan yang cocok. Saran ini dibuat agar kamu bisa menjaga semangat, fokus, dan keseimbangan emosi.\n
+        3.Berbagi Hasil ke Teman\n
+        Setelah mendapatkan saran kegiatan, pengguna bisa membagikan hasil mood dan rekomendasi mereka langsung ke WhatsApp atau media sosial lainnya dengan satu klik.</string>
     <string name="kembali">Kembali</string>
+
 </resources>

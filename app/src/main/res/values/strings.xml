@@ -2,7 +2,7 @@
     <string name="app_name">moody</string>
     <string name="intro_moody">Moody, Record Your Daily Mood! Sad: 0-60%,
         Happy: 76-100%</string>
-    <string name="tambah_catatan">Add Notes</string>
+    <string name="tambah_catatan">Add Notes(optional)</string>
     <string name="persenan_mood">Mood Percentage</string>
     <string name="sport">Sport</string>
     <string name="relaxed">Relaxed</string>
@@ -12,11 +12,22 @@
     <string name="pantai">Sad, isn\'t it? Let\'s go to the beach so that the brain can relax more^^</string>
     <string name="pesan_error">Enter a mood value between 0 to 100</string>
     <string name="cek_kegiatan">Check Activities</string>
+    <string name="bagikan">Share</string>
+    <string name="bagikan_template">
+        Mood: %1$d%%\nCategory: %2$s\n\nSuggested activity: %3$s</string>
     <string name="tentang_aplikasi">About Application</string>
     <string name="copyright">App Description: Moody – Mood dan Activity Helper\n
-        Moody is a simple app that helps users log their daily moods and provide activity recommendations based on mood percentages and activity preferences.\n
-        Users can:
-        Write a short diary
-        Enter mood as a percentage (0–100%)\n\nChoose the type of activity (Sport / Relax) The app supports 2 languages (Indonesia dan english), and can run in light and dark modes.</string>
+        Moody is a simple app that helps users log their daily moods\nand provide activity recommendations based on mood percentages and activity preferences.\n
+        Users can:\n
+        Write a short diary\n
+        Enter mood as a percentage (0–100%)\n\nChoose the type of activity (Sport / Relax)\nThe app supports 2 languages (Indonesia dan english), and can run in light and dark modes.\n\n
+        Key Features:\n\n
+        1.Daily Mood Check\n
+        Users can input their mood percentage each day and add personal notes to record their feelings or important events that happened.\n
+        2.Automatic Activity Recommendations\n
+        Based on mood and activity preferences (active like exercise, or relaxed like entertainment), Moody suggests suitable activities. These suggestions are designed to help you stay motivated, focused, and emotionally balanced.\n
+        3.Share Your Results with Friends\n
+        After receiving activity suggestions, users can share their mood results and recommendations directly to WhatsApp or other social media platforms with just one click.</string>
     <string name="kembali">Back</string>
+
 </resources>
