@@ -49,25 +49,20 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.vani0066.moody.R
 import com.vani0066.moody.ui.theme.MoodyTheme
-import com.vanisa0066.moody.model.Suasana
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(navController: NavHostController) {
-val data = listOf(
-    Suasana("sedih", R.drawable.sedih),
-    Suasana("senang", R.drawable.senang),
-)
+
     Scaffold(
         topBar = {
             TopAppBar(
-
                 title = {
                     Text(text = stringResource(R.string.app_name))
                 },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.primary,
+                    containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
 
                     ),
                 actions = {
@@ -77,7 +72,7 @@ val data = listOf(
                         Icon(
                             imageVector = Icons.Outlined.Info,
                             contentDescription = stringResource(R.string.tentang_aplikasi),
-                            tint = MaterialTheme.colorScheme.primary
+                            tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
                 }

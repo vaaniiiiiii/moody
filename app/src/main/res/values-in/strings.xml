@@ -3,6 +3,9 @@
     <string name="app_name">moody</string>
     <string name="intro_moody">Moody, mencatat mood harianmu! sedih: 0-60%,
         senang: 61-100%</string>
+    <string name="gambar">Gambar</string>
+    <string name="deskripsi_senang">senang</string>
+    <string name="deskripsi_sedih">sedih</string>
     <string name="tambah_catatan">Tambah Catatan(opsional)</string>
     <string name="persenan_mood">Persenan Mood</string>
     <string name="sport">Olahraga</string>

@@ -1,6 +1,10 @@
 package com.vanisa0066.moody.ui.screen
 
 import android.content.res.Configuration
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -16,6 +20,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -32,11 +37,11 @@ fun AboutScreen(navController: NavHostController) {
         topBar = {
             TopAppBar(
                 navigationIcon = {
-                    IconButton(onClick ={navController.popBackStack()} ) {
+                    IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.kembali),
-                            tint = MaterialTheme.colorScheme.primary
+                            tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
                 },
@@ -44,26 +49,50 @@ fun AboutScreen(navController: NavHostController) {
                     Text(text = stringResource(R.string.tentang_aplikasi))
                 },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.primary,
+                    containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
                 )
             )
         }
     ) { innerPadding ->
+        AboutContent(Modifier.padding(innerPadding))
+    }
+}
 
+@Composable
+fun AboutContent(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        Row {
+            Image(
+                painter = painterResource(R.drawable.senang),
+                contentDescription = stringResource(R.string.deskripsi_senang),
+//                modifier = Modifier
+//                    .size(200.dp)
+            )
+            Image(
+                painter = painterResource(R.drawable.sedih),
+                contentDescription = stringResource(R.string.deskripsi_sedih),
+            )
+
+        }
         Text(
             text = stringResource(R.string.copyright),
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier
+                .padding()
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState())
-
         )
     }
 }
+
 @Preview(showBackground = true)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
-fun AboutScreenPreview(){
+fun AboutScreenPreview() {
     MoodyTheme {
         AboutScreen(rememberNavController())
     }

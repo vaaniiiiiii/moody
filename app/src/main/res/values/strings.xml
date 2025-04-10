@@ -2,6 +2,9 @@
     <string name="app_name">moody</string>
     <string name="intro_moody">Moody, Record Your Daily Mood! Sad: 0-60%,
         Happy: 76-100%</string>
+    <string name="gambar">Picture</string>
+    <string name="deskripsi_senang">happy</string>
+    <string name="deskripsi_sedih">sadly</string>
     <string name="tambah_catatan">Add Notes(optional)</string>
     <string name="persenan_mood">Mood Percentage</string>
     <string name="sport">Sport</string>
