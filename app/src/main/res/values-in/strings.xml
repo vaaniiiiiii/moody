@@ -14,7 +14,8 @@
     <string name="sedih">Sedih</string>
     <string name="list_kosong">Belum ada data</string>
     <string name="x_diklik">%1$s diklik!</string>
-    <string name="belum_bisa">Belum bisa tambah</string>
+    <string name="kembali">Kembali</string>
+    <string name="simpan">Simpan</string>
     <string name="judul">Judul</string>
     <string name="isi_catatan">Isi Catatan</string>
     <string name="olahraga_rumah">kamu sedang senang, Olahraga di rumah adalah hal yang paling pas di saat mood bagus! :)</string>
@@ -42,7 +43,7 @@
         Berdasarkan mood dan preferensi aktivitas (aktif seperti olahraga, atau santai seperti hiburan), Moody memberikan saran kegiatan yang cocok. Saran ini dibuat agar kamu bisa menjaga semangat, fokus, dan keseimbangan emosi.\n
         3.Berbagi Hasil ke Teman\n
         Setelah mendapatkan saran kegiatan, pengguna bisa membagikan hasil mood dan rekomendasi mereka langsung ke WhatsApp atau media sosial lainnya dengan satu klik.</string>
-    <string name="kembali">Kembali</string>
+
 
 
 </resources>

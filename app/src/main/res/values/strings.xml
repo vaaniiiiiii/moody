@@ -13,7 +13,8 @@
     <string name="sedih">Sad</string>
     <string name="list_kosong">No data yet</string>
     <string name="x_diklik">%1$s diklik!</string>
-    <string name="belum_bisa">Not yet added</string>
+    <string name="kembali">Back</string>
+    <string name="simpan">Save</string>
     <string name="judul">Title</string>
     <string name="isi_catatan">Contents of the notes</string>
     <string name="olahraga_rumah">You\'re having fun, exercising at home is the most appropriate thing when you\'re in a good mood! :)</string>
@@ -40,6 +41,6 @@
         Based on mood and activity preferences (active like exercise, or relaxed like entertainment), Moody suggests suitable activities. These suggestions are designed to help you stay motivated, focused, and emotionally balanced.\n
         3.Share Your Results with Friends\n
         After receiving activity suggestions, users can share their mood results and recommendations directly to WhatsApp or other social media platforms with just one click.</string>
-    <string name="kembali">Back</string>
+
 
 </resources>
