@@ -24,6 +24,9 @@ fun SetupNavGraph(navController: NavHostController = rememberNavController()){
         composable(route = Screen.Moody.route){
             MoodyScreen(navController)
         }
+        composable(route = Screen.FormBaru.route){
+            MoodyScreen(navController)
+        }
     }
 }
 
