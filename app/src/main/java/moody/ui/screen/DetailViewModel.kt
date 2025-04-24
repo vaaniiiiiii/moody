@@ -27,7 +27,20 @@ class DetailViewModel (private val dao: HarianDao) : ViewModel() {
     }
 
 
-    fun getHarian(id: Long): Harian? {
-        return null
+    suspend fun getHarian(id: Long): Harian? {
+        return dao.getHarianById(id)
+    }
+
+    fun update(id: Long, judul: String, isi: String, mood: String){
+        val harian = Harian(
+            id = id,
+            tanggal = formatter.format(Date()),
+            judul = judul,
+            harian = isi,
+            mood = mood
+        )
+        viewModelScope.launch (Dispatchers.IO){
+            dao.update(harian)
+        }
     }
 }

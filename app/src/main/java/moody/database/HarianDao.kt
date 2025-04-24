@@ -18,4 +18,7 @@ interface HarianDao {
 
     @Query("SELECT * FROM harian ORDER BY tanggal DESC")
     fun getHarian(): Flow<List<Harian>>
+
+    @Query ("SELECT * FROM harian WHERE id = :id")
+    suspend fun getHarianById(id: Long): Harian?
 }

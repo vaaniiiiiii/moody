@@ -100,13 +100,14 @@ fun DetailMoodyScreen(navController: NavHostController, id: Long? = null){
                 ),
                 actions = {
                     IconButton(onClick = {
-
                         if (judul == "" || harian == ""){
                             Toast.makeText(context, R.string.invalid, Toast.LENGTH_SHORT).show()
                             return@IconButton
                         }
                         if (id == null){
                             viewModel.insert(judul, harian, moodOption )
+                        }else{
+                            viewModel.update(id, judul, harian, moodOption)
                         }
                         navController.popBackStack()}) {
                         Icon(
