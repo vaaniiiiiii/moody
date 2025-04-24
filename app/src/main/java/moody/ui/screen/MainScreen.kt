@@ -3,6 +3,7 @@ package moody.ui.screen
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.pdf.models.ListItem
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -47,6 +49,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.vani0066.moody.R
+import moody.model.Harian
 import moody.ui.theme.MoodyTheme
 import moody.navigation.Screen
 
@@ -72,6 +75,15 @@ fun MainScreen(navController: NavHostController) {
                         Icon(
                             imageVector = Icons.Outlined.Info,
                             contentDescription = stringResource(R.string.tentang_aplikasi),
+                            tint = MaterialTheme.colorScheme.onPrimary
+                        )
+                    }
+                    IconButton(onClick = {
+                        navController.navigate(Screen.Moody.route)
+                    }) {
+                        Icon(
+                            imageVector = Icons.Outlined.DateRange,
+                            contentDescription = stringResource(R.string.harian),
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
@@ -226,6 +238,8 @@ private fun shareData(context: Context, message: String){
         context.startActivity(shareIntent)
     }
 }
+
+
 
 @Composable
 fun MoodOption(label: String, isSelected: Boolean, modifier: Modifier) {

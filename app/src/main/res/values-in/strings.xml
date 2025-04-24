@@ -6,10 +6,15 @@
     <string name="gambar">Gambar</string>
     <string name="deskripsi_senang">senang</string>
     <string name="deskripsi_sedih">sedih</string>
-    <string name="tambah_catatan">Tambah Catatan(opsional)</string>
+    <string name="tambah_catatan">Tambah Catatan</string>
     <string name="persenan_mood">Persenan Mood</string>
     <string name="sport">Olahraga</string>
     <string name="relaxed">Santai</string>
+    <string name="senang">Senang</string>
+    <string name="sedih">Sedih</string>
+    <string name="list_kosong">Belum ada data</string>
+    <string name="x_diklik">%1$s diklik!</string>
+    <string name="belum_bisa">Belum bisa tambah</string>
     <string name="olahraga_rumah">kamu sedang senang, Olahraga di rumah adalah hal yang paling pas di saat mood bagus! :)</string>
     <string name="nonton_film">kamu sedang senang, Menonton film komedi adalah kegiatan yang mempertahankan moodmu!</string>
     <string name="badminton">lagi sedih ya? ayo Badminton, lampiasin dan keluarin keringet kamu! jangan lupa istirahat dan minum air putih :D</string>
@@ -17,7 +22,9 @@
     <string name="pesan_error">Masukkan nilai mood antara 0 sampai 100</string>
     <string name="cek_kegiatan">Cek Kegiatan</string>
     <string name="tentang_aplikasi">Tentang Aplikasi</string>
+    <string name="harian">catatan Moody</string>
     <string name="bagikan">Bagikan</string>
+    <string name="intro_dataCatatan">Tambahkan Catatan Harianmu</string>
     <string name="bagikan_template">
         Mood: %1$d%%\nKategori: %2$s\n\nSaran kegiatan: %3$s</string>
     <string name="copyright"> Deskripsi Aplikasi: Moody – Mood dan Activity Helper\n
@@ -34,5 +41,6 @@
         3.Berbagi Hasil ke Teman\n
         Setelah mendapatkan saran kegiatan, pengguna bisa membagikan hasil mood dan rekomendasi mereka langsung ke WhatsApp atau media sosial lainnya dengan satu klik.</string>
     <string name="kembali">Kembali</string>
+
 
 </resources>
