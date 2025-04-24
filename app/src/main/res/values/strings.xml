@@ -14,6 +14,8 @@
     <string name="list_kosong">No data yet</string>
     <string name="x_diklik">%1$s diklik!</string>
     <string name="belum_bisa">Not yet added</string>
+    <string name="judul">Title</string>
+    <string name="isi_catatan">Contents of the notes</string>
     <string name="olahraga_rumah">You\'re having fun, exercising at home is the most appropriate thing when you\'re in a good mood! :)</string>
     <string name="nonton_film">You\'re having a good time, Watching a comedy movie is an activity that keeps your mood up!</string>
     <string name="badminton">Sad, isn\'t it? come on Badminton, get on your feet and get your sweat out! Don\'t forget to rest and drink water :D</string>
