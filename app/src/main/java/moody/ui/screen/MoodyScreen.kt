@@ -27,6 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,6 +50,7 @@ import com.vani0066.moody.R
 import moody.model.Harian
 import moody.navigation.Screen
 import moody.ui.theme.MoodyTheme
+import moody.util.ViewModelFactory
 import screen.MainViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -101,8 +103,10 @@ fun MoodyScreen(navController: NavHostController) {
 
 @Composable
 fun MoodyContent(modifier: Modifier = Modifier, navController: NavHostController) {
-    val viewModel: MainViewModel = viewModel()
-    val data = viewModel.data
+    val context = LocalContext.current
+    val factory = ViewModelFactory(context)
+    val viewModel: MainViewModel = viewModel(factory = factory)
+    val data by viewModel.data.collectAsState()
 
     if (data.isEmpty()){
         Column (

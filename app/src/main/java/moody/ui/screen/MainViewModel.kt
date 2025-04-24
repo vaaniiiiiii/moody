@@ -1,34 +1,20 @@
 package screen
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
+import moody.database.HarianDao
 import moody.model.Harian
 
-class MainViewModel : ViewModel() {
-    val data = listOf(
-        Harian(
-            1,
-            "kuliah mobpro 17 feb",
-            "kuliah hari ini rada cape tapi juga lumayan seru!",
-            "2025-02-17 12:34:56",
-            ""
-        ),
-        Harian(
-            2,
-            "kuliah pag 18 feb",
-            "PAG bikin game laptopku rada lag ya :D",
-            "2025-02-18 16:45:34",
-            ""
-        ),
-
-        Harian(
-            10,
-            "pulkam 28 mar",
-            "akhirnya pulkam, ga sabar hari raya. minal aidzin wal faidzin semua!",
-            "2025-03-28 05:43:09",
-            ""
-        )
+class MainViewModel(dao: HarianDao) : ViewModel() {
+    val data: StateFlow<List<Harian>> = dao.getHarian().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = emptyList()
     )
     fun getHarian(id: Long): Harian? {
-        return data.find { it.id == id }
+        return data.value.find { it.id == id }
     }
 }
