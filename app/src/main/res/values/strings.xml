@@ -16,6 +16,8 @@
     <string name="kembali">Back</string>
     <string name="simpan">Save</string>
     <string name="judul">Title</string>
+    <string name="list">List view</string>
+    <string name="grid">Grid view</string>
     <string name="lainnya">Another option</string>
     <string name="hapus">Delete daily</string>
     <string name="pesan_hapus">Delete this Diary?</string>
