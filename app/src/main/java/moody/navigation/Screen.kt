@@ -7,7 +7,7 @@ sealed class Screen(val route: String){
     data object About: Screen("aboutScreen")
     data object Moody: Screen("moodyScreen")
     data object FormBaru: Screen("detailMoodyScreen")
-    data object FormUbah: Screen("moodyScreen/{$KEY_ID_HARIAN}"){
-        fun withId(id: Long) = "moodyScreen"
+    data object FormUbah: Screen("detailMoodyScreen/{$KEY_ID_HARIAN}"){
+        fun withId(id: Long) = "detailMoodyScreen/$id"
     }
 }

@@ -51,19 +51,14 @@ import moody.navigation.Screen
 import moody.ui.theme.MoodyTheme
 import screen.MainViewModel
 
-const val KEY_ID_HARIAN = "idHarian"
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MoodyScreen(navController: NavHostController, id: Long? = null) {
+fun MoodyScreen(navController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    if (id == null)
                     Text(text = stringResource(R.string.harian))
-                    else
-                        Text(text = stringResource(R.string.edit_catatan))
                 },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -91,15 +86,14 @@ fun MoodyScreen(navController: NavHostController, id: Long? = null) {
             }
         }
     ) { innerPadding ->
-        MoodyContent(Modifier.padding(innerPadding))
+        MoodyContent(Modifier.padding(innerPadding), navController)
     }
 }
 
 @Composable
-fun MoodyContent(modifier: Modifier = Modifier) {
+fun MoodyContent(modifier: Modifier = Modifier, navController: NavHostController) {
     val viewModel: MainViewModel = viewModel()
     val data = viewModel.data
-    val context = LocalContext.current
 
     if (data.isEmpty()){
         Column (
@@ -117,9 +111,8 @@ fun MoodyContent(modifier: Modifier = Modifier) {
         ){
             items(data) {
                 ListItem(harian = it) {
-                    val pesan = context.getString(R.string.x_diklik, it.judul)
+                    navController.navigate(Screen.FormUbah.withId(it.id))
                 }
-                HorizontalDivider()
             }
         }
     }

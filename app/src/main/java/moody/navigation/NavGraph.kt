@@ -29,7 +29,7 @@ fun SetupNavGraph(navController: NavHostController = rememberNavController()){
             MoodyScreen(navController)
         }
         composable(route = Screen.FormBaru.route){
-            DetailMoodyScreen()
+            DetailMoodyScreen(navController)
         }
         composable(
             route = Screen.FormUbah.route,
@@ -38,7 +38,7 @@ fun SetupNavGraph(navController: NavHostController = rememberNavController()){
             )
         ){ navBackStackEntry ->
             val id = navBackStackEntry.arguments?.getLong(KEY_ID_HARIAN)
-            MoodyScreen(navController, id)
+            DetailMoodyScreen(navController, id)
         }
     }
 }

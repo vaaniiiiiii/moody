@@ -35,9 +35,11 @@ import androidx.navigation.compose.rememberNavController
 import com.vani0066.moody.R
 import moody.ui.theme.MoodyTheme
 
+const val KEY_ID_HARIAN = "idHarian"
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailMoodyScreen(navController: NavHostController){
+fun DetailMoodyScreen(navController: NavHostController, id: Long? = null){
     var judul by remember { mutableStateOf("") }
     var harian by remember { mutableStateOf("") }
 
@@ -54,7 +56,10 @@ fun DetailMoodyScreen(navController: NavHostController){
                     }
                 },
                 title = {
-                    Text(text = stringResource(R.string.tambah_catatan))
+                    if (id == null)
+                        Text(text = stringResource(id = R.string.tambah_catatan))
+                    else
+                        Text(text = stringResource(id = R.string.edit_catatan))
                 },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
