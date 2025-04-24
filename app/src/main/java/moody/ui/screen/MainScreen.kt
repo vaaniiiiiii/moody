@@ -64,15 +64,7 @@ fun MainScreen(navController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                navigationIcon = {
-                    IconButton(onClick = {}) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.kembali),
-                            tint = MaterialTheme.colorScheme.onPrimary
-                        )
-                    }
-                },
+
                 title = {
                     Text(text = stringResource(R.string.app_name))
                 },

@@ -1,10 +1,14 @@
 package moody.ui.screen
 
 import android.content.res.Configuration
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -15,33 +19,57 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.vani0066.moody.R
 import moody.ui.theme.MoodyTheme
+import screen.MainViewModel
 
 const val KEY_ID_HARIAN = "idHarian"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailMoodyScreen(navController: NavHostController, id: Long? = null){
+    val viewModel: MainViewModel = viewModel()
+
     var judul by remember { mutableStateOf("") }
     var harian by remember { mutableStateOf("") }
+
+    val radioOptions = listOf(
+        "Senang",
+        "Sedih",
+    )
+
+    var moodOption by remember { mutableStateOf(radioOptions[0]) }
+
+    LaunchedEffect(Unit) {
+        if (id == null) return@LaunchedEffect
+        val data = viewModel.getHarian(id) ?: return@LaunchedEffect
+        judul = data.judul
+        harian = data.catatan
+        moodOption = data.mood
+    }
 
     Scaffold (
         topBar = {
@@ -82,6 +110,9 @@ fun DetailMoodyScreen(navController: NavHostController, id: Long? = null){
             onTitleChange = { judul = it },
             desc = harian,
             onDescChange = { harian = it },
+            mood = moodOption,
+            onMoodChange = { moodOption = it } ,
+            radioOption = radioOptions,
             modifier = Modifier.padding(padding)
         )
     }
@@ -91,6 +122,8 @@ fun DetailMoodyScreen(navController: NavHostController, id: Long? = null){
 fun FormCatatan(
     title: String, onTitleChange: (String) -> Unit,
     desc: String, onDescChange: (String) -> Unit,
+    mood: String, onMoodChange: (String) -> Unit,
+    radioOption: List<String>,
     modifier: Modifier
 ){
     Column (
@@ -114,7 +147,50 @@ fun FormCatatan(
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.Sentences
             ),
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxWidth()
+        )
+        Column (
+            modifier = Modifier
+                .padding(top = 16.dp)
+                .border(1.dp, Color.Gray, RoundedCornerShape(4.dp))
+        ){
+            radioOption.forEach { moodLabel ->
+                MoodOption(
+                    label = moodLabel,
+                    isSelected = mood == moodLabel,
+                    onClick = { onMoodChange(moodLabel) }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun MoodOption(
+    label: String,
+    isSelected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .selectable(
+                selected = isSelected,
+                onClick = onClick,
+                role = Role.RadioButton
+            )
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        RadioButton(
+            selected = isSelected,
+            onClick = null
+        )
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.padding(start = 8.dp)
         )
     }
 }
