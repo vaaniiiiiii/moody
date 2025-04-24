@@ -100,6 +100,7 @@ fun DetailMoodyScreen(navController: NavHostController, id: Long? = null){
                 ),
                 actions = {
                     IconButton(onClick = {
+
                         if (judul == "" || harian == ""){
                             Toast.makeText(context, R.string.invalid, Toast.LENGTH_SHORT).show()
                             return@IconButton
