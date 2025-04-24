@@ -13,8 +13,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -45,6 +47,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.vani0066.moody.R
 import moody.model.Harian
+import moody.navigation.Screen
 import moody.ui.theme.MoodyTheme
 import screen.MainViewModel
 
@@ -56,15 +59,6 @@ fun MoodyScreen(navController: NavHostController, id: Long? = null) {
     Scaffold(
         topBar = {
             TopAppBar(
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.kembali),
-                            tint = MaterialTheme.colorScheme.onPrimary
-                        )
-                    }
-                },
                 title = {
                     if (id == null)
                     Text(text = stringResource(R.string.harian))
@@ -76,15 +70,25 @@ fun MoodyScreen(navController: NavHostController, id: Long? = null) {
                     titleContentColor = MaterialTheme.colorScheme.onPrimary,
                 ),
                 actions = {
-                    IconButton(onClick = {navController.popBackStack()}) {
-                        Icon(
-                            imageVector = Icons.Outlined.Check,
-                            contentDescription = stringResource(R.string.simpan),
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                    }
+                    IconButton(onClick = {
+
+                    }) { }
                 }
             )
+        },
+        floatingActionButton = {
+
+            FloatingActionButton(
+                onClick = {
+                    navController.navigate(Screen.FormBaru.route)
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Add,
+                    contentDescription = stringResource(R.string.tambah_catatan),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+            }
         }
     ) { innerPadding ->
         MoodyContent(Modifier.padding(innerPadding))

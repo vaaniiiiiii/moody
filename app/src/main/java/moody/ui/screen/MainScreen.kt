@@ -100,30 +100,9 @@ fun MainScreen(navController: NavHostController) {
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
-                    IconButton(onClick = {}) {
-                        Icon(
-                            imageVector = Icons.Outlined.Check,
-                            contentDescription = stringResource(R.string.simpan),
-                            tint = MaterialTheme.colorScheme.onPrimary
-                        )
-                    }
                 }
             )
         },
-        floatingActionButton = {
-
-            FloatingActionButton(
-                onClick = {
-                    navController.navigate(Screen.FormBaru.route)
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = stringResource(R.string.tambah_catatan),
-                    tint = MaterialTheme.colorScheme.primary
-                )
-            }
-        }
     ) { innerPadding ->
         ScreenContent(Modifier.padding(innerPadding))
     }
