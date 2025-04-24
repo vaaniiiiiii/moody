@@ -1,4 +1,4 @@
-package com.vani0066.moody
+package moody
 
 import org.junit.Test
 

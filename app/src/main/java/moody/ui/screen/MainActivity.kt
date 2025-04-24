@@ -1,12 +1,12 @@
-package com.vani0066.moody
+package moody.ui.screen
 
 
-import SetupNavGraph
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.vani0066.moody.ui.theme.MoodyTheme
+import moody.navigation.SetupNavGraph
+import moody.ui.theme.MoodyTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

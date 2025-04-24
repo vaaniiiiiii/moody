@@ -1,4 +1,4 @@
-package com.vanisa0066.moody.ui.screen
+package moody.ui.screen
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.vani0066.moody.R
-import com.vani0066.moody.ui.theme.MoodyTheme
+import moody.ui.theme.MoodyTheme
 
 
 @OptIn(ExperimentalMaterial3Api::class)

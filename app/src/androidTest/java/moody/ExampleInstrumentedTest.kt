@@ -1,4 +1,4 @@
-package com.vani0066.moody
+package moody
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
