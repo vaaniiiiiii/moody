@@ -1,6 +1,7 @@
 package moody.ui.screen
 
 import android.content.res.Configuration
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,10 +10,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -30,6 +38,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -102,12 +111,12 @@ fun MoodyScreen(navController: NavHostController) {
             }
         }
     ) { innerPadding ->
-        MoodyContent(Modifier.padding(innerPadding), navController)
+        MoodyContent(showList, Modifier.padding(innerPadding), navController)
     }
 }
 
 @Composable
-fun MoodyContent(modifier: Modifier = Modifier, navController: NavHostController) {
+fun MoodyContent(showList: Boolean, modifier: Modifier = Modifier, navController: NavHostController) {
     val context = LocalContext.current
     val factory = ViewModelFactory(context)
     val viewModel: MainViewModel = viewModel(factory = factory)
@@ -123,6 +132,7 @@ fun MoodyContent(modifier: Modifier = Modifier, navController: NavHostController
         }
     }
     else{
+        if (showList) {
         LazyColumn (
             modifier = modifier.fillMaxSize(),
             contentPadding = PaddingValues(bottom = 84.dp)
@@ -130,6 +140,21 @@ fun MoodyContent(modifier: Modifier = Modifier, navController: NavHostController
             items(data) {
                 ListItem(harian = it) {
                     navController.navigate(Screen.FormUbah.withId(it.id))
+                }
+            }
+        }
+        }else{
+            LazyVerticalStaggeredGrid (
+                modifier = modifier.fillMaxSize(),
+                columns = StaggeredGridCells.Fixed(2),
+                verticalItemSpacing = 8.dp,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = PaddingValues(8.dp, 8.dp, 8.dp, 8.dp)
+            ) {
+                items(data){
+                    GridItem(harian = it) {
+                        navController.navigate(Screen.FormUbah.withId(it.id))
+                    }
                 }
             }
         }
@@ -157,6 +182,38 @@ fun ListItem(harian: Harian, onClick: () -> Unit){
             overflow = TextOverflow.Ellipsis
         )
         Text(text = harian.tanggal)
+    }
+}
+
+@Composable
+fun GridItem(harian: Harian, onClick: () -> Unit){
+    Card(
+        modifier = Modifier.fillMaxWidth().clickable { onClick() },
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+        ),
+        border = BorderStroke(1.dp, Color.Gray)
+    ) {
+        Column (
+            modifier = Modifier.padding(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ){
+            Text(
+                text = harian.judul,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = harian.harian,
+                maxLines = 4,
+                overflow = TextOverflow.Ellipsis
+            )
+            Text(
+                text = harian.mood
+            )
+            Text(text = harian.tanggal)
+        }
     }
 }
 
