@@ -147,7 +147,7 @@ fun ListItem(harian: Harian, onClick: () -> Unit){
         )
 
         Text(
-            text = harian.catatan,
+            text = harian.harian,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis
         )

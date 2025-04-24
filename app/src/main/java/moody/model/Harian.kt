@@ -8,7 +8,7 @@ data class Harian(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,
     val judul: String,
-    val catatan: String,
+    val harian: String,
     val mood: String,
     val tanggal: String
 )

@@ -15,6 +15,6 @@ class MainViewModel(dao: HarianDao) : ViewModel() {
         initialValue = emptyList()
     )
     fun getHarian(id: Long): Harian? {
-        return data.value.find { it.id == id }
+        return null
     }
 }

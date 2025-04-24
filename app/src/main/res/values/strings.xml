@@ -30,6 +30,7 @@
         Mood: %1$d%%\nCategory: %2$s\n\nSuggested activity: %3$s</string>
     <string name="tentang_aplikasi">About Application</string>
     <string name="harian">Diary Moody</string>
+    <string name="invalid">The title and body of the post should not be blank.</string>
     <string name="copyright">App Description: Moody – Mood dan Activity Helper\n
         Moody is a simple app that helps users log their daily moods\nand provide activity recommendations based on mood percentages and activity preferences.\n
         Users can:\n

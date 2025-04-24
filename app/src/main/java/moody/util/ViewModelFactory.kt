@@ -5,6 +5,7 @@ import androidx.compose.runtime.internal.illegalDecoyCallException
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import moody.database.HarianDb
+import moody.ui.screen.DetailViewModel
 import screen.MainViewModel
 
 class ViewModelFactory (
@@ -15,6 +16,8 @@ class ViewModelFactory (
         val dao = HarianDb.getInstance(context).dao
         if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
             return MainViewModel(dao) as T
+        }else if (modelClass.isAssignableFrom(DetailViewModel::class.java)){
+            return DetailViewModel(dao) as T
         }
         throw illegalDecoyCallException("unknown ViewModel class")
     }

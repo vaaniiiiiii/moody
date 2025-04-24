@@ -1,6 +1,7 @@
 package moody.ui.screen
 
 import android.content.res.Configuration
+import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,6 +34,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.ImeAction
@@ -44,6 +46,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.vani0066.moody.R
 import moody.ui.theme.MoodyTheme
+import moody.util.ViewModelFactory
 import screen.MainViewModel
 
 const val KEY_ID_HARIAN = "idHarian"
@@ -51,7 +54,9 @@ const val KEY_ID_HARIAN = "idHarian"
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailMoodyScreen(navController: NavHostController, id: Long? = null){
-    val viewModel: MainViewModel = viewModel()
+    val context = LocalContext.current
+    val factory = ViewModelFactory(context)
+    val viewModel: DetailViewModel = viewModel(factory = factory)
 
     var judul by remember { mutableStateOf("") }
     var harian by remember { mutableStateOf("") }
@@ -67,7 +72,7 @@ fun DetailMoodyScreen(navController: NavHostController, id: Long? = null){
         if (id == null) return@LaunchedEffect
         val data = viewModel.getHarian(id) ?: return@LaunchedEffect
         judul = data.judul
-        harian = data.catatan
+        harian = data.harian
         moodOption = data.mood
     }
 
@@ -94,7 +99,15 @@ fun DetailMoodyScreen(navController: NavHostController, id: Long? = null){
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
                 ),
                 actions = {
-                    IconButton(onClick = {navController.popBackStack()}) {
+                    IconButton(onClick = {
+                        if (judul == "" || harian == ""){
+                            Toast.makeText(context, R.string.invalid, Toast.LENGTH_SHORT).show()
+                            return@IconButton
+                        }
+                        if (id == null){
+                            viewModel.insert(judul, harian, moodOption )
+                        }
+                        navController.popBackStack()}) {
                         Icon(
                             imageVector = Icons.Outlined.Check,
                             contentDescription = stringResource(R.string.simpan),

@@ -27,6 +27,7 @@
     <string name="cek_kegiatan">Cek Kegiatan</string>
     <string name="tentang_aplikasi">Tentang Aplikasi</string>
     <string name="harian">catatan Moody</string>
+    <string name="invalid">Judul dan isi catatan tidak boleh kosong.</string>
     <string name="bagikan">Bagikan</string>
     <string name="intro_dataCatatan">Tambahkan Catatan Harianmu</string>
     <string name="bagikan_template">
