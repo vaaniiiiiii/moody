@@ -48,11 +48,11 @@ import moody.model.Harian
 import moody.ui.theme.MoodyTheme
 import screen.MainViewModel
 
+const val KEY_ID_HARIAN = "idHarian"
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MoodyScreen(navController: NavHostController) {
-    var judul by remember { mutableStateOf("") }
-    var harian by remember { mutableStateOf("") }
+fun MoodyScreen(navController: NavHostController, id: Long? = null) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -66,7 +66,10 @@ fun MoodyScreen(navController: NavHostController) {
                     }
                 },
                 title = {
+                    if (id == null)
                     Text(text = stringResource(R.string.harian))
+                    else
+                        Text(text = stringResource(R.string.edit_catatan))
                 },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -84,50 +87,10 @@ fun MoodyScreen(navController: NavHostController) {
             )
         }
     ) { innerPadding ->
-        FormHarian(
-            title = judul,
-            onTitleChange = { judul = it },
-            desc = harian,
-            onDescChange = { harian = it },
-            modifier = Modifier.padding(innerPadding)
-        )
         MoodyContent(Modifier.padding(innerPadding))
-
     }
 }
-@Composable
-fun FormHarian(
-    title: String, onTitleChange: (String) -> Unit,
-    desc: String, onDescChange: (String) -> Unit,
-    modifier: Modifier
-){
-    Column (
-        modifier = modifier.fillMaxSize().padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ){
-        OutlinedTextField(
-            value = title,
-            onValueChange = { onTitleChange(it) },
-            label = { Text(text = stringResource(R.string.judul)) },
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(
-                capitalization = KeyboardCapitalization.Words,
-                imeAction = ImeAction.Next
-            ),
-            modifier = Modifier.fillMaxWidth()
-        )
 
-        OutlinedTextField(
-            value = desc,
-            onValueChange = { onDescChange(it) },
-            label = { Text(text = stringResource(R.string.isi_catatan)) },
-            keyboardOptions = KeyboardOptions(
-                capitalization = KeyboardCapitalization.Sentences
-            ),
-            modifier = Modifier.fillMaxSize()
-        )
-    }
-}
 @Composable
 fun MoodyContent(modifier: Modifier = Modifier) {
     val viewModel: MainViewModel = viewModel()

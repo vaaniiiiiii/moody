@@ -131,7 +131,7 @@ fun MainScreen(navController: NavHostController) {
 
 @Composable
 fun ScreenContent(modifier: Modifier = Modifier) {
-//    var tambahCatatan by rememberSaveable { mutableStateOf("") }
+
     var persenanMood by rememberSaveable { mutableStateOf("") }
     var hasilKegiatan by rememberSaveable { mutableStateOf("") }
 
@@ -155,17 +155,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.fillMaxWidth()
         )
-//        OutlinedTextField(
-//            value = tambahCatatan,
-//            onValueChange = { tambahCatatan = it },
-//            label = { Text(text = stringResource((R.string.tambah_catatan))) },
-//            singleLine = true,
-//            keyboardOptions = KeyboardOptions(
-//                keyboardType = KeyboardType.Text,
-//                imeAction = ImeAction.Next
-//            ),
-//            modifier = Modifier.fillMaxWidth()
-//        )
+
         OutlinedTextField(
             value = persenanMood,
             onValueChange = { persenanMood = it },
