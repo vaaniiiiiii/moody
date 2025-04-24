@@ -21,4 +21,7 @@ interface HarianDao {
 
     @Query ("SELECT * FROM harian WHERE id = :id")
     suspend fun getHarianById(id: Long): Harian?
+
+    @Query("DELETE FROM harian WHERE id = :id")
+    suspend fun deleteById(id: Long)
 }

@@ -16,6 +16,8 @@
     <string name="x_diklik">%1$s diklik!</string>
     <string name="kembali">Kembali</string>
     <string name="simpan">Simpan</string>
+    <string name="lainnya">Opsi lainnya</string>
+    <string name="hapus">Hapus Harian</string>
     <string name="judul">Judul</string>
     <string name="isi_catatan">Isi Catatan</string>
     <string name="edit_catatan">Ubah Catatan</string>

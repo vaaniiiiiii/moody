@@ -14,7 +14,5 @@ class MainViewModel(dao: HarianDao) : ViewModel() {
         started = SharingStarted.WhileSubscribed(),
         initialValue = emptyList()
     )
-    fun getHarian(id: Long): Harian? {
-        return null
-    }
+
 }

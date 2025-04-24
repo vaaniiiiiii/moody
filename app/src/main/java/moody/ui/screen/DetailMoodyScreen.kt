@@ -13,12 +13,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
@@ -47,7 +49,6 @@ import androidx.navigation.compose.rememberNavController
 import com.vani0066.moody.R
 import moody.ui.theme.MoodyTheme
 import moody.util.ViewModelFactory
-import screen.MainViewModel
 
 const val KEY_ID_HARIAN = "idHarian"
 
@@ -116,6 +117,12 @@ fun DetailMoodyScreen(navController: NavHostController, id: Long? = null){
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
+                    if (id != null){
+                        DeleteAction {
+                            viewModel.delete(id)
+                            navController.popBackStack()
+                        }
+                    }
                 }
             )
         }
@@ -130,6 +137,32 @@ fun DetailMoodyScreen(navController: NavHostController, id: Long? = null){
             radioOption = radioOptions,
             modifier = Modifier.padding(padding)
         )
+    }
+}
+
+@Composable
+fun DeleteAction(delete: () -> Unit){
+    var expanded by remember { mutableStateOf(false) }
+    IconButton(onClick = { expanded = true }) {
+        Icon(
+            imageVector = Icons.Filled.MoreVert,
+            contentDescription = stringResource(R.string.lainnya),
+            tint = MaterialTheme.colorScheme.onPrimary
+        )
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            DropdownMenuItem(
+                text = {
+                    Text(text = stringResource(id = R.string.hapus))
+                },
+                onClick = {
+                    expanded = false
+                    delete()
+                }
+            )
+        }
     }
 }
 
