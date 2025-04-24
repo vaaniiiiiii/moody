@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import moody.ui.screen.AboutScreen
 import moody.ui.screen.MainScreen
+import moody.ui.screen.MoodyScreen
 
 @Composable
 fun SetupNavGraph(navController: NavHostController = rememberNavController()){
@@ -19,6 +20,9 @@ fun SetupNavGraph(navController: NavHostController = rememberNavController()){
         }
         composable(route = Screen.About.route){
             AboutScreen(navController)
+        }
+        composable(route = Screen.Moody.route){
+            MoodyScreen(navController)
         }
     }
 }
