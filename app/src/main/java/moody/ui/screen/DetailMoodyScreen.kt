@@ -62,6 +62,8 @@ fun DetailMoodyScreen(navController: NavHostController, id: Long? = null){
     var judul by remember { mutableStateOf("") }
     var harian by remember { mutableStateOf("") }
 
+    var showDialog by remember { mutableStateOf(false) }
+
     val radioOptions = listOf(
         "Senang",
         "Sedih",
@@ -118,7 +120,11 @@ fun DetailMoodyScreen(navController: NavHostController, id: Long? = null){
                         )
                     }
                     if (id != null){
-                        DeleteAction {
+                        DeleteAction { showDialog = true }
+                        DisplayAlertDialog(
+                            openDialog = showDialog,
+                            onDismissRequest = { showDialog = false}) {
+                            showDialog = false
                             viewModel.delete(id)
                             navController.popBackStack()
                         }
