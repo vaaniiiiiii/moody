@@ -1,44 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<!--    app name/penjelasan -->
     <string name="app_name">moody</string>
     <string name="intro_moody">Moody, mencatat mood harianmu! sedih: 0-60%,
         senang: 61-100%</string>
-    <string name="gambar">Gambar</string>
-    <string name="deskripsi_senang">senang</string>
-    <string name="deskripsi_sedih">sedih</string>
-    <string name="tambah_catatan">Tambah Catatan</string>
-    <string name="persenan_mood">Persenan Mood</string>
-    <string name="sport">Olahraga</string>
-    <string name="relaxed">Santai</string>
-    <string name="senang">Senang</string>
-    <string name="sedih">Sedih</string>
-    <string name="list_kosong">Belum ada data</string>
-    <string name="x_diklik">%1$s diklik!</string>
-    <string name="kembali">Kembali</string>
-    <string name="simpan">Simpan</string>
-    <string name="lainnya">Opsi lainnya</string>
-    <string name="hapus">Hapus Harian</string>
-    <string name="pesan_hapus">Hapus Harian ini?</string>
-    <string name="tombol_hapus">Hapus</string>
-    <string name="tombol_batal">Batal</string>
-    <string name="judul">Judul</string>
-    <string name="list">Tampilan list</string>
-    <string name="grid">Tampilan grid</string>
-    <string name="isi_catatan">Isi Catatan</string>
-    <string name="edit_catatan">Ubah Catatan</string>
-    <string name="olahraga_rumah">kamu sedang senang, Olahraga di rumah adalah hal yang paling pas di saat mood bagus! :)</string>
-    <string name="nonton_film">kamu sedang senang, Menonton film komedi adalah kegiatan yang mempertahankan moodmu!</string>
-    <string name="badminton">lagi sedih ya? ayo Badminton, lampiasin dan keluarin keringet kamu! jangan lupa istirahat dan minum air putih :D</string>
-    <string name="pantai">lagi sedih ya? Pergi ke pantai yuk biar otak makin relax^^</string>
-    <string name="pesan_error">Masukkan nilai mood antara 0 sampai 100</string>
-    <string name="cek_kegiatan">Cek Kegiatan</string>
     <string name="tentang_aplikasi">Tentang Aplikasi</string>
-    <string name="harian">catatan Moody</string>
-    <string name="invalid">Judul dan isi catatan tidak boleh kosong.</string>
-    <string name="bagikan">Bagikan</string>
-    <string name="intro_dataCatatan">Tambahkan Catatan Harianmu</string>
-    <string name="bagikan_template">
-        Mood: %1$d%%\nKategori: %2$s\n\nSaran kegiatan: %3$s</string>
     <string name="copyright"> Deskripsi Aplikasi: Moody – Mood dan Activity Helper\n
         Moody adalah aplikasi sederhana yang membantu pengguna mencatat mood harian dan\nmemberikan rekomendasi kegiatan berdasarkan persentase mood dan preferensi aktivitas.
         Pengguna dapat:\n
@@ -52,6 +18,53 @@
         Berdasarkan mood dan preferensi aktivitas (aktif seperti olahraga, atau santai seperti hiburan), Moody memberikan saran kegiatan yang cocok. Saran ini dibuat agar kamu bisa menjaga semangat, fokus, dan keseimbangan emosi.\n
         3.Berbagi Hasil ke Teman\n
         Setelah mendapatkan saran kegiatan, pengguna bisa membagikan hasil mood dan rekomendasi mereka langsung ke WhatsApp atau media sosial lainnya dengan satu klik.</string>
+<!--    assesment 1-->
+    <string name="gambar">Gambar</string>
+    <string name="deskripsi_senang">senang</string>
+    <string name="deskripsi_sedih">sedih</string>
+    <string name="tambah_catatan">Tambah Catatan</string>
+    <string name="persenan_mood">Persenan Mood</string>
+    <string name="sport">Olahraga</string>
+    <string name="relaxed">Santai</string>
+    <string name="senang">Senang</string>
+    <string name="sedih">Sedih</string>
+    <string name="list_kosong">Belum ada data</string>
+    <string name="x_diklik">%1$s diklik!</string>
+    <string name="bagikan">Bagikan</string>
+    <string name="bagikan_template">Mood: %1$d%%\nKategori: %2$s\n\nSaran kegiatan: %3$s</string>
+<!--    insert-->
+    <string name="judul">Judul</string>
+    <string name="kembali">Kembali</string>
+    <string name="simpan">Simpan</string>
+<!--    hapus-->
+    <string name="lainnya">Opsi lainnya</string>
+    <string name="hapus">Hapus Harian</string>
+    <string name="pesan_hapus">Hapus Harian ini?</string>
+    <string name="tombol_hapus">Hapus</string>
+    <string name="tombol_batal">Batal</string>
+
+<!--    recycle bin -->
+<string name="recycle_judul">Tempat sampah</string>
+<!--    tampilan list/grid-->
+    <string name="list">Tampilan list</string>
+    <string name="grid">Tampilan grid</string>
+<!--    update catatan-->
+    <string name="isi_catatan">Isi Catatan</string>
+    <string name="edit_catatan">Ubah Catatan</string>
+<!--    saran kegiatan-->
+    <string name="olahraga_rumah">kamu sedang senang, Olahraga di rumah adalah hal yang paling pas di saat mood bagus! :)</string>
+    <string name="nonton_film">kamu sedang senang, Menonton film komedi adalah kegiatan yang mempertahankan moodmu!</string>
+    <string name="badminton">lagi sedih ya? ayo Badminton, lampiasin dan keluarin keringet kamu! jangan lupa istirahat dan minum air putih :D</string>
+    <string name="pantai">lagi sedih ya? Pergi ke pantai yuk biar otak makin relax^^</string>
+    <string name="pesan_error">Masukkan nilai mood antara 0 sampai 100</string>
+    <string name="cek_kegiatan">Cek Kegiatan</string>
+
+<!--    input catatan(harian moody)-->
+    <string name="harian">catatan Moody</string>
+    <string name="invalid">Judul dan isi catatan tidak boleh kosong.</string>
+    <string name="intro_dataCatatan">Tambahkan Catatan Harianmu</string>
+
+
 
 
 

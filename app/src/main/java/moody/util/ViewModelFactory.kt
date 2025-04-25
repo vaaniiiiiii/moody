@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import moody.database.HarianDb
 import moody.ui.screen.DetailViewModel
-import screen.MainViewModel
+import moody.ui.screen.MainViewModel
 
 class ViewModelFactory (
     private val context: Context

@@ -3,7 +3,6 @@ package moody.ui.screen
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
-import android.graphics.pdf.models.ListItem
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,14 +17,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.outlined.Check
-import androidx.compose.material.icons.outlined.DateRange
+import androidx.compose.material.icons.outlined.AddCircle
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -53,9 +48,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.vani0066.moody.R
-import moody.model.Harian
-import moody.ui.theme.MoodyTheme
 import moody.navigation.Screen
+import moody.ui.theme.MoodyTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -87,7 +81,7 @@ fun MainScreen(navController: NavHostController) {
                         navController.navigate(Screen.Moody.route)
                     }) {
                         Icon(
-                            imageVector = Icons.Outlined.DateRange,
+                            imageVector = Icons.Outlined.AddCircle,
                             contentDescription = stringResource(R.string.harian),
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
