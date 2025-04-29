@@ -1,6 +1,7 @@
 package moody.ui.screen
 
 import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -17,6 +18,7 @@ import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -97,6 +99,16 @@ fun MoodyScreen(navController: NavHostController) {
                             tint = MaterialTheme.colorScheme.primary
                         )
                     }
+                    IconButton(onClick = {
+                        navController.navigate(Screen.Recycle.route)
+                    }) {
+                        Icon(
+                            imageVector = Icons.Filled.Delete,
+                            contentDescription = stringResource(R.string.recycle),
+                            tint = MaterialTheme.colorScheme.onPrimary
+                        )
+                    }
+
 
                 }
             )
@@ -114,15 +126,6 @@ fun MoodyScreen(navController: NavHostController) {
                     tint = MaterialTheme.colorScheme.primary
                 )
             }
-//            IconButton(onClick = {
-//                navController.navigate(Screen.Recycle.route)
-//            }) {
-//                Icon(
-//                    imageVector = Icons.Filled.Delete,
-//                    contentDescription = stringResource(R.string.recycle_judul),
-//                    tint = MaterialTheme.colorScheme.onPrimary
-//                )
-//            }
         }
     ) { innerPadding ->
         MoodyContent(showList, Modifier.padding(innerPadding), navController)
@@ -135,8 +138,10 @@ fun MoodyContent(showList: Boolean, modifier: Modifier = Modifier, navController
     val factory = ViewModelFactory(context)
     val viewModel: MainViewModel = viewModel(factory = factory)
     val data by viewModel.data.collectAsState()
+    val filteredData = data.filter { !it.isDeleted }
 
-    if (data.isEmpty()){
+
+    if (filteredData.isEmpty()){
         Column (
             modifier = modifier.fillMaxSize().padding(16.dp),
             verticalArrangement = Arrangement.Center,
@@ -151,7 +156,8 @@ fun MoodyContent(showList: Boolean, modifier: Modifier = Modifier, navController
             modifier = modifier.fillMaxSize(),
             contentPadding = PaddingValues(bottom = 84.dp)
         ){
-            items(data) {
+            items(filteredData) {
+                Log.d("ROOM", it.isDeleted.toString())
                 ListItem(harian = it) {
                     navController.navigate(Screen.FormUbah.withId(it.id))
                 }
@@ -165,7 +171,7 @@ fun MoodyContent(showList: Boolean, modifier: Modifier = Modifier, navController
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 contentPadding = PaddingValues(8.dp, 8.dp, 8.dp, 8.dp)
             ) {
-                items(data){
+                items(filteredData){
                     GridItem(harian = it) {
                         navController.navigate(Screen.FormUbah.withId(it.id))
                     }
@@ -195,6 +201,7 @@ fun ListItem(harian: Harian, onClick: () -> Unit){
             maxLines = 2,
             overflow = TextOverflow.Ellipsis
         )
+        Text(text = harian.mood)
         Text(text = harian.tanggal)
     }
 }

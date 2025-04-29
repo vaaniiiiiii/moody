@@ -20,10 +20,11 @@
     <string name="grid">Grid view</string>
     <string name="lainnya">Another option</string>
     <string name="hapus">Delete daily</string>
+    <string name="tanya_recycle">Recover or Delete this Daily?</string>
     <string name="pesan_hapus">Delete this Diary?</string>
     <string name="tombol_hapus">Delete</string>
+    <string name="tombol_undo">Recover</string>
     <string name="tombol_batal">Cancel</string>
-    <string name="recycle_judul">Recycle</string>
     <string name="edit_catatan">Change Note</string>
     <string name="isi_catatan">Contents of the notes</string>
     <string name="olahraga_rumah">You\'re having fun, exercising at home is the most appropriate thing when you\'re in a good mood! :)</string>
@@ -38,6 +39,7 @@
         Mood: %1$d%%\nCategory: %2$s\n\nSuggested activity: %3$s</string>
     <string name="tentang_aplikasi">About Application</string>
     <string name="harian">Diary Moody</string>
+    <string name="recycle">Recycle Bin</string>
     <string name="invalid">The title and body of the post should not be blank.</string>
     <string name="copyright">App Description: Moody – Mood dan Activity Helper\n
         Moody is a simple app that helps users log their daily moods\nand provide activity recommendations based on mood percentages and activity preferences.\n

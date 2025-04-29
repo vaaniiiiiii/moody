@@ -8,9 +8,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
@@ -47,6 +49,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.vani0066.moody.R
+import moody.navigation.Screen
 import moody.ui.theme.MoodyTheme
 import moody.util.ViewModelFactory
 
@@ -54,7 +57,7 @@ const val KEY_ID_HARIAN = "idHarian"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailMoodyScreen(navController: NavHostController, id: Long? = null){
+fun DetailMoodyScreen(navController: NavHostController, id: Long? = null) {
     val context = LocalContext.current
     val factory = ViewModelFactory(context)
     val viewModel: DetailViewModel = viewModel(factory = factory)
@@ -79,11 +82,11 @@ fun DetailMoodyScreen(navController: NavHostController, id: Long? = null){
         moodOption = data.mood
     }
 
-    Scaffold (
+    Scaffold(
         topBar = {
             TopAppBar(
                 navigationIcon = {
-                    IconButton(onClick = {navController.popBackStack()}) {
+                    IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.kembali),
@@ -103,43 +106,46 @@ fun DetailMoodyScreen(navController: NavHostController, id: Long? = null){
                 ),
                 actions = {
                     IconButton(onClick = {
-                        if (judul == "" || harian == ""){
+                        if (judul == "" || harian == "") {
                             Toast.makeText(context, R.string.invalid, Toast.LENGTH_SHORT).show()
                             return@IconButton
                         }
-                        if (id == null){
-                            viewModel.insert(judul, harian, moodOption )
-                        }else{
+                        if (id == null) {
+                            viewModel.insert(judul, harian, moodOption)
+                        } else {
                             viewModel.update(id, judul, harian, moodOption)
                         }
-                        navController.popBackStack()}) {
+                        navController.popBackStack()
+                    }) {
                         Icon(
                             imageVector = Icons.Outlined.Check,
                             contentDescription = stringResource(R.string.simpan),
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
-                    if (id != null){
+                    if (id != null) {
                         DeleteAction { showDialog = true }
                         DisplayAlertDialog(
                             openDialog = showDialog,
-                            onDismissRequest = { showDialog = false}) {
-                            showDialog = false
-                            viewModel.delete(id)
-                            navController.popBackStack()
-                        }
+                            onDismissRequest = { showDialog = false },
+                            onConfirmation = {
+                                showDialog = false
+                                viewModel.softDelete(id)
+                                navController.navigate(Screen.Moody.route)
+                            }
+                        )
                     }
                 }
             )
         }
-    ){ padding ->
+    ) { padding ->
         FormCatatan(
             title = judul,
             onTitleChange = { judul = it },
             desc = harian,
             onDescChange = { harian = it },
             mood = moodOption,
-            onMoodChange = { moodOption = it } ,
+            onMoodChange = { moodOption = it },
             radioOption = radioOptions,
             modifier = Modifier.padding(padding)
         )
@@ -147,7 +153,7 @@ fun DetailMoodyScreen(navController: NavHostController, id: Long? = null){
 }
 
 @Composable
-fun DeleteAction(delete: () -> Unit){
+fun DeleteAction(delete: () -> Unit) {
     var expanded by remember { mutableStateOf(false) }
     IconButton(onClick = { expanded = true }) {
         Icon(
@@ -179,10 +185,13 @@ fun FormCatatan(
     mood: String, onMoodChange: (String) -> Unit,
     radioOption: List<String>,
     modifier: Modifier
-){
-    Column (
-        modifier = modifier.fillMaxSize().padding(16.dp)
-    ){
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(16.dp)
+    ) {
         OutlinedTextField(
             value = title,
             onValueChange = { onTitleChange(it) },
@@ -201,13 +210,14 @@ fun FormCatatan(
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.Sentences
             ),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
         )
-        Column (
+        Column(
             modifier = Modifier
                 .padding(top = 16.dp)
                 .border(1.dp, Color.Gray, RoundedCornerShape(4.dp))
-        ){
+        ) {
             radioOption.forEach { moodLabel ->
                 MoodOption(
                     label = moodLabel,
@@ -252,7 +262,7 @@ fun MoodOption(
 @Preview(showBackground = true)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
-fun DetailMoodyScreenPreview(){
+fun DetailMoodyScreenPreview() {
     MoodyTheme {
         DetailMoodyScreen(rememberNavController())
     }

@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import moody.model.Harian
 
-@Database(entities = [Harian::class], version = 1, exportSchema = false)
+@Database(entities = [Harian::class], version = 3, exportSchema = false)
 abstract class HarianDb : RoomDatabase(){
 
     abstract val dao: HarianDao
@@ -25,7 +25,9 @@ abstract class HarianDb : RoomDatabase(){
                         context.applicationContext,
                         HarianDb::class.java,
                         "catatan.db"
-                    ).build()
+                    )
+                        .fallbackToDestructiveMigration()
+                        .build()
                     INSTANCE = instance
                 }
                 return instance

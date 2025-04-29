@@ -12,6 +12,7 @@ import moody.ui.screen.DetailMoodyScreen
 import moody.ui.screen.KEY_ID_HARIAN
 import moody.ui.screen.MainScreen
 import moody.ui.screen.MoodyScreen
+import moody.ui.screen.RecycleScreen
 
 @Composable
 fun SetupNavGraph(navController: NavHostController = rememberNavController()){
@@ -39,6 +40,10 @@ fun SetupNavGraph(navController: NavHostController = rememberNavController()){
         ){ navBackStackEntry ->
             val id = navBackStackEntry.arguments?.getLong(KEY_ID_HARIAN)
             DetailMoodyScreen(navController, id)
+        }
+        composable(route = Screen.Recycle.route,
+        ) {
+            RecycleScreen(navController)
         }
     }
 }

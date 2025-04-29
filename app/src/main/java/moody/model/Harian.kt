@@ -10,15 +10,6 @@ data class Harian(
     val judul: String,
     val harian: String,
     val mood: String,
-    val tanggal: String
+    val tanggal: String,
+    val isDeleted: Boolean = false
 )
-
-//@Entity(tableName = "recycle")
-//data class Recycle(
-//    @PrimaryKey(autoGenerate = true)
-//    val id: Long = 0,
-//    val judul: String,
-//    val harian: String,
-//    val mood: String,
-//    val tanggal: String
-//)

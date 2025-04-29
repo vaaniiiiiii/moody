@@ -2,6 +2,7 @@
 <resources>
 <!--    app name/penjelasan -->
     <string name="app_name">moody</string>
+    <string name="recycle">Tempat Sampah</string>
     <string name="intro_moody">Moody, mencatat mood harianmu! sedih: 0-60%,
         senang: 61-100%</string>
     <string name="tentang_aplikasi">Tentang Aplikasi</string>
@@ -43,8 +44,10 @@
     <string name="tombol_hapus">Hapus</string>
     <string name="tombol_batal">Batal</string>
 
+
 <!--    recycle bin -->
-<string name="recycle_judul">Tempat sampah</string>
+    <string name="tanya_recycle">Pulihkan atau hapus harian ini?</string>
+    <string name="tombol_undo">Pulihkan</string>
 <!--    tampilan list/grid-->
     <string name="list">Tampilan list</string>
     <string name="grid">Tampilan grid</string>

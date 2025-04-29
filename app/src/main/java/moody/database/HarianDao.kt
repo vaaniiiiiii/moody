@@ -25,4 +25,9 @@ interface HarianDao {
     @Query("DELETE FROM harian WHERE id = :id")
     suspend fun deleteById(id: Long)
 
+    @Query("UPDATE harian SET isDeleted = 1 WHERE id = :id")
+    suspend fun softDeleteById(id: Long)
+
+    @Query("UPDATE harian SET isDeleted = 0 WHERE id = :id")
+    suspend fun undoDeleteById(id: Long)
 }
