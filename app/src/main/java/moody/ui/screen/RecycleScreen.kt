@@ -10,10 +10,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -37,7 +35,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.vani0066.moody.R
-import moody.navigation.Screen
 import moody.util.ViewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -64,19 +61,6 @@ fun RecycleScreen(navController: NavHostController) {
                     titleContentColor = MaterialTheme.colorScheme.onPrimary,
                 ),
             )
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    navController.navigate(Screen.FormBaru.route)
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = stringResource(R.string.tambah_catatan),
-                    tint = MaterialTheme.colorScheme.primary
-                )
-            }
         }
     ) { innerPadding ->
         RecycleContent(Modifier.padding(innerPadding))
