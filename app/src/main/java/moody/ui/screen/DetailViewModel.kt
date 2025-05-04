@@ -26,7 +26,6 @@ class DetailViewModel (private val dao: HarianDao) : ViewModel() {
         }
     }
 
-
     suspend fun getHarian(id: Long): Harian? {
         return dao.getHarianById(id)
     }

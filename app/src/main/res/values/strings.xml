@@ -1,46 +1,14 @@
 <resources>
+    <!--App name-->
     <string name="app_name">moody</string>
-    <string name="intro_moody">Moody, Record Your Daily Mood! Sad: 0-60%,
-        Happy: 76-100%</string>
-    <string name="gambar">Picture</string>
-    <string name="deskripsi_senang">happy</string>
-    <string name="deskripsi_sedih">sadly</string>
-    <string name="tambah_catatan">Add Notes</string>
-    <string name="persenan_mood">Mood Percentage</string>
-    <string name="sport">Sport</string>
-    <string name="relaxed">Relaxed</string>
-    <string name="senang">Happy</string>
-    <string name="sedih">Sad</string>
-    <string name="list_kosong">No data yet</string>
-    <string name="x_diklik">%1$s diklik!</string>
-    <string name="kembali">Back</string>
-    <string name="simpan">Save</string>
-    <string name="judul">Title</string>
-    <string name="list">List view</string>
-    <string name="grid">Grid view</string>
-    <string name="lainnya">Another option</string>
-    <string name="hapus">Delete daily</string>
-    <string name="tanya_recycle">Recover or Delete this Daily?</string>
-    <string name="pesan_hapus">Delete this Diary?</string>
-    <string name="tombol_hapus">Delete</string>
-    <string name="tombol_undo">Recover</string>
-    <string name="tombol_batal">Cancel</string>
-    <string name="edit_catatan">Change Note</string>
-    <string name="isi_catatan">Contents of the notes</string>
-    <string name="olahraga_rumah">You\'re having fun, exercising at home is the most appropriate thing when you\'re in a good mood! :)</string>
-    <string name="nonton_film">You\'re having a good time, Watching a comedy movie is an activity that keeps your mood up!</string>
-    <string name="badminton">Sad, isn\'t it? come on Badminton, get on your feet and get your sweat out! Don\'t forget to rest and drink water :D</string>
-    <string name="pantai">Sad, isn\'t it? Let\'s go to the beach so that the brain can relax more^^</string>
-    <string name="pesan_error">Enter a mood value between 0 to 100</string>
-    <string name="intro_dataCatatan">Add your Daily Mood</string>
-    <string name="cek_kegiatan">Check Activities</string>
-    <string name="bagikan">Share</string>
-    <string name="bagikan_template">
-        Mood: %1$d%%\nCategory: %2$s\n\nSuggested activity: %3$s</string>
-    <string name="tentang_aplikasi">About Application</string>
     <string name="harian">Diary Moody</string>
     <string name="recycle">Recycle Bin</string>
-    <string name="invalid">The title and body of the post should not be blank.</string>
+
+<!--    About screen-->
+    <string name="deskripsi_senang">happy</string>
+    <string name="deskripsi_sedih">sadly</string>
+    <string name="gambar">Picture</string>
+    <string name="tentang_aplikasi">About Application</string>
     <string name="copyright">App Description: Moody – Mood dan Activity Helper\n
         Moody is a simple app that helps users log their daily moods\nand provide activity recommendations based on mood percentages and activity preferences.\n
         Users can:\n
@@ -54,5 +22,45 @@
         3.Share Your Results with Friends\n
         After receiving activity suggestions, users can share their mood results and recommendations directly to WhatsApp or other social media platforms with just one click.</string>
 
+    <!--MainSceen-->
+    <string name="intro_moody">Moody, Record Your Daily Mood! Sad: 0-60%,
+        Happy: 76-100%</string>
+    <string name="persenan_mood">Mood Percentage</string>
+    <string name="sport">Sport</string>
+    <string name="relaxed">Relaxed</string>
+    <string name="olahraga_rumah">You\'re having fun, exercising at home is the most appropriate thing when you\'re in a good mood! :)</string>
+    <string name="nonton_film">You\'re having a good time, Watching a comedy movie is an activity that keeps your mood up!</string>
+    <string name="badminton">Sad, isn\'t it? come on Badminton, get on your feet and get your sweat out! Don\'t forget to rest and drink water :D</string>
+    <string name="pantai">Sad, isn\'t it? Let\'s go to the beach so that the brain can relax more^^</string>
+    <string name="bagikan">Share</string>
+    <string name="bagikan_template">
+        Mood: %1$d%%\nCategory: %2$s\n\nSuggested activity: %3$s</string>
+    <string name="pesan_error">Enter a mood value between 0 to 100</string>
+    <string name="cek_kegiatan">Check Activities</string>
 
+<!--    Moody Screen-->
+    <string name="list">List view</string>
+    <string name="grid">Grid view</string>
+    <string name="list_kosong">No data yet</string>
+    <string name="tambah_catatan">Add Notes</string>
+
+<!--    Detail Moody Screen-->
+    <string name="senang">Happy</string>
+    <string name="sedih">Sad</string>
+    <string name="judul">Title</string>
+    <string name="lainnya">Another option</string>
+    <string name="hapus">Delete daily</string>
+    <string name="edit_catatan">Change Note</string>
+    <string name="isi_catatan">Contents of the notes</string>
+    <string name="invalid">The title and body of the post should not be blank.</string>
+    <string name="intro_dataCatatan">Add your Daily Mood</string>
+    <string name="kembali">Back</string>
+    <string name="simpan">Save</string>
+
+<!--    Alert Dialog-->
+    <string name="tanya_recycle">Recover or Delete this Daily?</string>
+    <string name="pesan_hapus">Delete this Diary?</string>
+    <string name="tombol_hapus">Delete</string>
+    <string name="tombol_undo">Recover</string>
+    <string name="tombol_batal">Cancel</string>
 </resources>

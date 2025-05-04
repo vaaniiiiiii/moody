@@ -68,8 +68,8 @@ fun DetailMoodyScreen(navController: NavHostController, id: Long? = null) {
     var showDialog by remember { mutableStateOf(false) }
 
     val radioOptions = listOf(
-        "Senang",
-        "Sedih",
+        stringResource(R.string.senang),
+        stringResource(R.string.sedih)
     )
 
     var moodOption by remember { mutableStateOf(radioOptions[0]) }
