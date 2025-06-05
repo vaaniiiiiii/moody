@@ -18,6 +18,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AddCircle
+import androidx.compose.material.icons.outlined.Face
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -74,6 +75,15 @@ fun MainScreen(navController: NavHostController) {
                         Icon(
                             imageVector = Icons.Outlined.Info,
                             contentDescription = stringResource(R.string.tentang_aplikasi),
+                            tint = MaterialTheme.colorScheme.onPrimary
+                        )
+                    }
+                    IconButton(onClick = {
+                        navController.navigate(Screen.Gambar.route)
+                    }) {
+                        Icon(
+                            imageVector = Icons.Outlined.Face,
+                            contentDescription = stringResource(R.string.Gambar),
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }

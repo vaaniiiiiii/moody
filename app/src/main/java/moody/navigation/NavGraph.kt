@@ -9,6 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import moody.ui.screen.AboutScreen
 import moody.ui.screen.DetailMoodyScreen
+import moody.ui.screen.GambarScreen
 import moody.ui.screen.KEY_ID_HARIAN
 import moody.ui.screen.MainScreen
 import moody.ui.screen.MoodyScreen
@@ -28,6 +29,9 @@ fun SetupNavGraph(navController: NavHostController = rememberNavController()){
         }
         composable(route = Screen.Moody.route){
             MoodyScreen(navController)
+        }
+        composable(route = Screen.Gambar.route){
+            GambarScreen(navController)
         }
         composable(route = Screen.FormBaru.route){
             DetailMoodyScreen(navController)

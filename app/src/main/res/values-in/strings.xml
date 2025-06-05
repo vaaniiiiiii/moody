@@ -2,7 +2,9 @@
 <resources>
 <!--    app name -->
     <string name="app_name">moody</string>
+    <string name="Main">Menu Utama</string>
     <string name="recycle">Tempat Sampah</string>
+    <string name="Gambar">Gambar Harian</string>
     <string name="harian">catatan Moody</string>
 
 <!--    Main Screen-->

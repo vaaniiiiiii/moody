@@ -1,7 +1,9 @@
 <resources>
     <!--App name-->
     <string name="app_name">moody</string>
+    <string name="Main">Main Menu</string>
     <string name="harian">Diary Moody</string>
+    <string name="Gambar">Diary Pict</string>
     <string name="recycle">Recycle Bin</string>
 
 <!--    About screen-->

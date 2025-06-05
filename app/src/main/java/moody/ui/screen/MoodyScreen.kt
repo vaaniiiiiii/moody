@@ -19,6 +19,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.outlined.Face
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -108,8 +111,33 @@ fun MoodyScreen(navController: NavHostController) {
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
-
-
+                    IconButton(onClick = {
+                        navController.navigate(Screen.Home.route)
+                    }) {
+                        Icon(
+                            imageVector = Icons.Outlined.Home,
+                            contentDescription = stringResource(R.string.Main),
+                            tint = MaterialTheme.colorScheme.onPrimary
+                        )
+                    }
+                    IconButton(onClick = {
+                        navController.navigate(Screen.About.route)
+                    }) {
+                        Icon(
+                            imageVector = Icons.Outlined.Info,
+                            contentDescription = stringResource(R.string.tentang_aplikasi),
+                            tint = MaterialTheme.colorScheme.onPrimary
+                        )
+                    }
+                    IconButton(onClick = {
+                        navController.navigate(Screen.Gambar.route)
+                    }) {
+                        Icon(
+                            imageVector = Icons.Outlined.Face,
+                            contentDescription = stringResource(R.string.Gambar),
+                            tint = MaterialTheme.colorScheme.onPrimary
+                        )
+                    }
                 }
             )
         },

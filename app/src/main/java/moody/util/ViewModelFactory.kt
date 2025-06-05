@@ -1,7 +1,6 @@
 package moody.util
 
 import android.content.Context
-import androidx.compose.runtime.internal.illegalDecoyCallException
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import moody.database.HarianDb
@@ -19,6 +18,6 @@ class ViewModelFactory (
         }else if (modelClass.isAssignableFrom(DetailViewModel::class.java)){
             return DetailViewModel(dao) as T
         }
-        throw illegalDecoyCallException("unknown ViewModel class")
+        throw IllegalArgumentException("unknown ViewModel class")
     }
 }
