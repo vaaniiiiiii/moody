@@ -73,4 +73,6 @@
     <string name="profil">Profile</string>
     <string name="tutup">Close</string>
     <string name="logout">Logout</string>
+    <string name="tambah_daily">Add activities</string>
+
 </resources>
