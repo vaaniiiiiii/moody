@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -12,11 +13,15 @@ import kotlinx.coroutines.launch
 import moody.database.HarianDao
 import moody.model.Gambar
 import moody.model.Harian
+import moody.network.ApiStatus
 import moody.network.DailyApi
 
 class MainViewModel(private val dao: HarianDao) : ViewModel() {
 
     var dataDaily = mutableStateOf(emptyList<Gambar>())
+        private set
+
+    var status = MutableStateFlow(ApiStatus.LOADING)
         private set
 
     init {
@@ -25,8 +30,10 @@ class MainViewModel(private val dao: HarianDao) : ViewModel() {
 
     private fun retrieveData(){
         viewModelScope.launch (Dispatchers.IO){
+            status.value = ApiStatus.LOADING
             try {
                 dataDaily.value = DailyApi.service.getDaily()
+                status.value = ApiStatus.SUCCESS
             }catch (e: Exception){
                 Log.d("MainViewModel", "Failure: ${e.message}")
             }
