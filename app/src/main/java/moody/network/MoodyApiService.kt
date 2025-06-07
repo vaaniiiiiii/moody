@@ -7,7 +7,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.http.GET
 
-private const val BASE_URL = "https://raw.githubusercontent.com/indraazimi/mobpro1-compose/static-api/static-api/"
+private const val BASE_URL = "https://dailylogger.sendiko.my.id/"
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
@@ -20,7 +20,7 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface MoodyApiService {
-    @GET("static-api.json")
+    @GET("gambar.php")
     suspend fun getDaily(): List<Gambar>
 }
 
@@ -29,7 +29,7 @@ object DailyApi{
         retrofit.create(MoodyApiService::class.java)
     }
     fun getDailyUrl(imageId: String): String{
-        return "$BASE_URL$imageId.jpg"
+        return "${BASE_URL} imageId.php? id = $imageId"
     }
 }
 
