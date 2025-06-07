@@ -71,5 +71,6 @@
     <string name="gambar_daily">Gambar %1$s</string>
     <string name="error">Gagal memuat data.. koneksi error</string>
     <string name="try_again">Coba lagi</string>
+    <string name="profil">Profil</string>
 
 </resources>

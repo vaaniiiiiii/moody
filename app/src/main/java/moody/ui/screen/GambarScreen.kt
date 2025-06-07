@@ -1,6 +1,8 @@
 package moody.ui.screen
 
+import android.content.Context
 import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -43,12 +45,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.credentials.CredentialManager
+import androidx.credentials.CustomCredential
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.GetCredentialResponse
+import androidx.credentials.exceptions.GetCredentialException
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
+import com.vani0066.moody.BuildConfig
 import com.vani0066.moody.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import moody.model.Gambar
 import moody.navigation.Screen
 import moody.network.ApiStatus
@@ -58,6 +72,8 @@ import moody.ui.theme.MoodyTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GambarScreen (navController: NavHostController) {
+    val context = LocalContext.current
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -78,6 +94,15 @@ fun GambarScreen (navController: NavHostController) {
                     titleContentColor = MaterialTheme.colorScheme.onPrimary,
                 ),
                 actions = {
+                    IconButton(onClick = {
+                        CoroutineScope(Dispatchers.IO).launch { signIn(context) }
+                    }) {
+                        Icon(
+                            painter = painterResource(R.drawable.baseline_account_circle_24),
+                            contentDescription = stringResource(R.string.profil),
+                            tint = MaterialTheme.colorScheme.onPrimary
+                        )
+                    }
                     IconButton(onClick = {
                         navController.navigate(Screen.Home.route)
                     }) {
@@ -190,6 +215,39 @@ fun ListItem(gambar: Gambar){
                 color = Color.White
             )
         }
+    }
+}
+
+private suspend fun signIn(context: Context){
+    val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
+        .setFilterByAuthorizedAccounts(false)
+        .setServerClientId(BuildConfig.API_KEY)
+        .build()
+
+    val request: GetCredentialRequest = GetCredentialRequest.Builder()
+        .addCredentialOption(googleIdOption)
+        .build()
+    try {
+        val credentialManager = CredentialManager.create(context)
+        val result = credentialManager.getCredential(context, request)
+        handleSignIn(result)
+    }catch (e: GetCredentialException){
+        Log.e("SIGN-IN", "Error: ${e.errorMessage}")
+    }
+}
+
+private fun handleSignIn(result: GetCredentialResponse){
+    val credential = result.credential
+    if (credential is CustomCredential &&
+        credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL){
+        try {
+            val googleId = GoogleIdTokenCredential.createFrom(credential.data)
+            Log.d("SIGN-IN", "User email: ${googleId.id}")
+        }catch (e: GoogleIdTokenParsingException){
+            Log.e("SIGN-IN", "Error: ${e.message}")
+        }
+    }else{
+        Log.e("SIGN-In", "Error: unrecognized custom credential type.")
     }
 }
 

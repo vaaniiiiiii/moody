@@ -70,4 +70,5 @@
     <string name="gambar_daily">Pict %1$s</string>
     <string name="error">Failed to load data.. Error connection</string>
     <string name="try_again">Try again</string>
+    <string name="profil">Profile</string>
 </resources>
