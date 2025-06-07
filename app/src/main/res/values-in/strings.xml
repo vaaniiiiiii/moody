@@ -66,4 +66,8 @@
     <string name="tombol_batal">Batal</string>
     <string name="tanya_recycle">Pulihkan atau hapus harian ini?</string>
     <string name="tombol_undo">Pulihkan</string>
+
+    <!--    Assesment 3-->
+    <string name="gambar_daily">Gambar %1$s</string>
+
 </resources>

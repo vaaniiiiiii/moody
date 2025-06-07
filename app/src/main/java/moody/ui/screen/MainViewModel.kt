@@ -1,6 +1,7 @@
 package moody.ui.screen
 
 import android.util.Log
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -9,10 +10,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import moody.database.HarianDao
+import moody.model.Gambar
 import moody.model.Harian
-import moody.network.MoodyApi
+import moody.network.DailyApi
 
 class MainViewModel(private val dao: HarianDao) : ViewModel() {
+
+    var dataDaily = mutableStateOf(emptyList<Gambar>())
+        private set
 
     init {
         retrieveData()
@@ -21,8 +26,7 @@ class MainViewModel(private val dao: HarianDao) : ViewModel() {
     private fun retrieveData(){
         viewModelScope.launch (Dispatchers.IO){
             try {
-                val result = MoodyApi.service.getDaily()
-                Log.d("MainViewModel", "Success: $result")
+                dataDaily.value = DailyApi.service.getDaily()
             }catch (e: Exception){
                 Log.d("MainViewModel", "Failure: ${e.message}")
             }

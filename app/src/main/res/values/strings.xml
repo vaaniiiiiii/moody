@@ -65,4 +65,7 @@
     <string name="tombol_hapus">Delete</string>
     <string name="tombol_undo">Recover</string>
     <string name="tombol_batal">Cancel</string>
+
+<!--    Assesment 3-->
+    <string name="gambar_daily">Pict %1$s</string>
 </resources>

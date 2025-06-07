@@ -28,4 +28,7 @@ object DailyApi{
     val service: MoodyApiService by lazy {
         retrofit.create(MoodyApiService::class.java)
     }
+    fun getDailyUrl(imageId: String): String{
+        return "$BASE_URL$imageId.jpg"
+    }
 }
