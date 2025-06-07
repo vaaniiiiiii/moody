@@ -28,7 +28,9 @@ private val retrofit = Retrofit.Builder()
 
 interface MoodyApiService {
     @GET("daily.php")
-    suspend fun getDaily(): List<Gambar>
+    suspend fun getDaily(
+        @Header("Authorization") userId: String
+    ): List<Gambar>
 
     @Multipart
     @POST("daily.php")
