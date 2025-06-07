@@ -75,5 +75,8 @@
     <string name="tutup">Tutup</string>
     <string name="logout">Logout</string>
     <string name="tambah_daily">Tambah Aktivitas</string>
+    <string name="judulDaily">Judul</string>
+    <string name="Hari">Hari</string>
+    <string name="Daily">Kegiatan</string>
 
 </resources>

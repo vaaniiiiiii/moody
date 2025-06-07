@@ -97,10 +97,12 @@ fun GambarScreen (navController: NavHostController) {
     val user by dataStore.userFlow.collectAsState(User())
 
     var showDialog by remember { mutableStateOf(false) }
+    var showDailyDialog by remember { mutableStateOf(false) }
 
     var bitmap: Bitmap? by remember { mutableStateOf(null) }
     val launcher = rememberLauncherForActivityResult(CropImageContract()) {
         bitmap = getCroppedImage(context.contentResolver, it)
+        if (bitmap != null) showDailyDialog = true
     }
 
     Scaffold(
@@ -193,6 +195,14 @@ fun GambarScreen (navController: NavHostController) {
                 onDismissRequest = {showDialog = false}) {
                 CoroutineScope(Dispatchers.IO).launch { signOut(context, dataStore) }
                 showDialog = false
+            }
+        }
+        if (showDailyDialog){
+            DailyDialog(
+                bitmap = bitmap,
+                onDismissRequest = {showDailyDialog = false}) {judul, hari, daily ->
+                Log.d("TAMBAH", "$judul $hari $daily ditambahkan.")
+                showDailyDialog = false
             }
         }
     }

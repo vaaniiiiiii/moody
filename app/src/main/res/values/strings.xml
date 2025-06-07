@@ -74,5 +74,8 @@
     <string name="tutup">Close</string>
     <string name="logout">Logout</string>
     <string name="tambah_daily">Add activities</string>
+    <string name="judulDaily">Title</string>
+    <string name="Hari">Day</string>
+    <string name="Daily">Activities</string>
 
 </resources>
