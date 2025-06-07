@@ -8,6 +8,7 @@ import android.graphics.ImageDecoder
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -95,6 +96,9 @@ fun GambarScreen (navController: NavHostController) {
     val context = LocalContext.current
     val dataStore = UserDataStore(context)
     val user by dataStore.userFlow.collectAsState(User())
+
+    val viewModel: MainViewModel = viewModel()
+    val errorMessage by viewModel.erroMassage
 
     var showDialog by remember { mutableStateOf(false) }
     var showDailyDialog by remember { mutableStateOf(false) }
@@ -201,16 +205,19 @@ fun GambarScreen (navController: NavHostController) {
             DailyDialog(
                 bitmap = bitmap,
                 onDismissRequest = {showDailyDialog = false}) {judul, hari, daily ->
-                Log.d("TAMBAH", "$judul $hari $daily ditambahkan.")
                 showDailyDialog = false
             }
+        }
+        if (errorMessage != null){
+            Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
+            viewModel.clearMessage()
         }
     }
 }
 
 @Composable
-fun GambarContent (modifier: Modifier = Modifier){
-    val viewModel: MainViewModel = viewModel()
+fun GambarContent (viewModel: MainViewModel, modifier: Modifier = Modifier){
+
     val dataDaily by viewModel.dataDaily
     val status by viewModel.status.collectAsState()
 
