@@ -1,5 +1,6 @@
 package moody.ui.screen
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -17,9 +18,14 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.vani0066.moody.R
 import moody.navigation.Screen
+import moody.ui.theme.MoodyTheme
+import org.w3c.dom.Text
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -76,5 +82,24 @@ fun GambarScreen (navController: NavHostController) {
         }
     ) { innerPadding ->
         AboutContent(Modifier.padding(innerPadding))
+    }
+}
+
+@Composable
+fun GambarContent (modifier: Modifier = Modifier){
+    val viewModel: MainViewModel = viewModel()
+
+    Text(
+        text = "hello Android",
+        modifier = modifier
+    )
+}
+
+@Preview(showBackground = true)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
+@Composable
+fun GambarScreenPreview() {
+    MoodyTheme {
+        GambarScreen(rememberNavController())
     }
 }
