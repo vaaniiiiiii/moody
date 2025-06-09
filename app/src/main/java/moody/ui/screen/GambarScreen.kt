@@ -16,18 +16,17 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.outlined.AddCircle
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -70,7 +69,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.canhub.cropper.CropImage
 import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageOptions
@@ -87,9 +85,9 @@ import moody.model.Gambar
 import moody.model.User
 import moody.navigation.Screen
 import moody.network.ApiStatus
-import moody.network.DailyApi
 import moody.network.UserDataStore
 import moody.ui.theme.MoodyTheme
+import moody.util.ViewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -98,11 +96,13 @@ fun GambarScreen (navController: NavHostController) {
     val dataStore = UserDataStore(context)
     val user by dataStore.userFlow.collectAsState(User())
 
-    val viewModel: MainViewModel = viewModel()
+    val viewModel: MainViewModel = viewModel(factory = ViewModelFactory(context))
     val errorMessage by viewModel.erroMassage
 
     var showDialog by remember { mutableStateOf(false) }
     var showDailyDialog by remember { mutableStateOf(false) }
+    var showDeleteDialog by remember { mutableStateOf(false) }
+    var deletedDailyId by remember { mutableStateOf("") }
 
     var bitmap: Bitmap? by remember { mutableStateOf(null) }
     val launcher = rememberLauncherForActivityResult(CropImageContract()) {
@@ -140,6 +140,7 @@ fun GambarScreen (navController: NavHostController) {
                     }) {
                         Icon(
                             painter = painterResource(R.drawable.baseline_account_circle_24),
+
                             contentDescription = stringResource(R.string.profil),
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
@@ -150,24 +151,6 @@ fun GambarScreen (navController: NavHostController) {
                         Icon(
                             imageVector = Icons.Outlined.Home,
                             contentDescription = stringResource(R.string.Main),
-                            tint = MaterialTheme.colorScheme.onPrimary
-                        )
-                    }
-                    IconButton(onClick = {
-                        navController.navigate(Screen.About.route)
-                    }) {
-                        Icon(
-                            imageVector = Icons.Outlined.Info,
-                            contentDescription = stringResource(R.string.tentang_aplikasi),
-                            tint = MaterialTheme.colorScheme.onPrimary
-                        )
-                    }
-                    IconButton(onClick = {
-                        navController.navigate(Screen.Moody.route)
-                    }) {
-                        Icon(
-                            imageVector = Icons.Outlined.AddCircle,
-                            contentDescription = stringResource(R.string.harian),
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
@@ -192,7 +175,10 @@ fun GambarScreen (navController: NavHostController) {
             }
         }
     ) { innerPadding ->
-        GambarContent(viewModel, user.email, Modifier.padding(innerPadding))
+        GambarContent(viewModel, user.email, Modifier.padding(innerPadding), onDelete = {id ->
+            deletedDailyId = id
+            showDeleteDialog = true
+        })
 
         if (showDialog){
             ProfilDialog(
@@ -205,9 +191,19 @@ fun GambarScreen (navController: NavHostController) {
         if (showDailyDialog){
             DailyDialog(
                 bitmap = bitmap,
-                onDismissRequest = {showDailyDialog = false}) {judul, hari, daily ->
+                onDismissRequest = {showDailyDialog = false}) { title, mood ->
+                viewModel.saveData(user.email, title, mood, bitmap!!)
                 showDailyDialog = false
             }
+        }
+        if (showDeleteDialog) {
+            DialogHapus(
+                onDismissRequest = { showDeleteDialog = false },
+                onConfirm = {
+                    viewModel.deleteData(user.email, deletedDailyId)
+                    showDeleteDialog = false
+                }
+            )
         }
         if (errorMessage != null){
             Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
@@ -217,7 +213,7 @@ fun GambarScreen (navController: NavHostController) {
 }
 
 @Composable
-fun GambarContent (viewModel: MainViewModel,userId: String, modifier: Modifier = Modifier){
+fun GambarContent (viewModel: MainViewModel,userId: String, modifier: Modifier = Modifier, onDelete: (String) -> Unit){
 
     val dataDaily by viewModel.dataDaily
     val status by viewModel.status.collectAsState()
@@ -242,7 +238,14 @@ fun GambarContent (viewModel: MainViewModel,userId: String, modifier: Modifier =
                 columns = GridCells.Fixed(2),
                 contentPadding = PaddingValues(bottom = 80.dp)
             ) {
-                items(dataDaily) { ListItem(gambar = it) }
+                items(dataDaily.size) {index ->
+                    val daily = dataDaily[index]
+                    ListItem(
+                        daily = daily,
+                        onDeleteClick = onDelete,
+                        showDeleteButton = (index >= 2 )
+                    )
+                }
             }
         }
         ApiStatus.FAILED -> {
@@ -265,38 +268,52 @@ fun GambarContent (viewModel: MainViewModel,userId: String, modifier: Modifier =
 }
 
 @Composable
-fun ListItem(gambar: Gambar){
+fun ListItem(daily: Gambar, onDeleteClick: (String) -> Unit, showDeleteButton: Boolean = false) {
     Box(
         modifier = Modifier.padding(4.dp).border(1.dp, Color.Gray),
         contentAlignment = Alignment.BottomCenter
-    ){
+    ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(DailyApi.getDailyUrl(gambar.imageId))
+                .data(daily.imageUrl.replace("http", "https"))
                 .crossfade(true)
                 .build(),
-            contentDescription = stringResource(R.string.gambar_daily, gambar.judul),
+            contentDescription = stringResource(R.string.gambar, daily.title),
             contentScale = ContentScale.Crop,
             placeholder = painterResource(id = R.drawable.loading_img),
             error = painterResource(id = R.drawable.baseline_broken_image_24),
             modifier = Modifier.fillMaxWidth().padding(4.dp)
         )
-        Column (
+        Row (
             modifier = Modifier.fillMaxWidth().padding(4.dp)
                 .background(Color(red = 0f, green = 0f, blue = 0f, alpha = 0.5f))
-                .padding(4.dp)
-        ){
-            Text(text = gambar.judul,
-                fontWeight = FontWeight.Bold
-            )
-            Text(text = gambar.hari,
-                fontWeight = FontWeight.Normal
-            )
-            Text(text = gambar.daily,
-                fontStyle = FontStyle.Normal,
-                fontSize = 14.sp,
-                color = Color.White
-            )
+                .padding(4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+
+        ) {
+            Column {
+                Text(
+                    text = daily.title,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+                Text(
+                    text = daily.mood,
+                    fontStyle = FontStyle.Normal,
+                    fontSize = 14.sp,
+                    color = Color.White
+                )
+            }
+            if (showDeleteButton) {
+                IconButton(onClick = {onDeleteClick(daily.id)}) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = stringResource(id = R.string.hapus),
+                        tint = Color.White
+                    )
+                }
+            }
         }
     }
 }

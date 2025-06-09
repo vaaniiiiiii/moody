@@ -57,24 +57,6 @@ fun AboutScreen(navController: NavHostController) {
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
-                    IconButton(onClick = {
-                        navController.navigate(Screen.Gambar.route)
-                    }) {
-                        Icon(
-                            imageVector = Icons.Outlined.Face,
-                            contentDescription = stringResource(R.string.Gambar),
-                            tint = MaterialTheme.colorScheme.onPrimary
-                        )
-                    }
-                    IconButton(onClick = {
-                        navController.navigate(Screen.Moody.route)
-                    }) {
-                        Icon(
-                            imageVector = Icons.Outlined.AddCircle,
-                            contentDescription = stringResource(R.string.harian),
-                            tint = MaterialTheme.colorScheme.onPrimary
-                        )
-                    }
                 },
                 title = {
                     Text(text = stringResource(R.string.tentang_aplikasi))

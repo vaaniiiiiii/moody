@@ -36,8 +36,10 @@ class MainViewModel(private val dao: HarianDao) : ViewModel() {
         viewModelScope.launch (Dispatchers.IO){
             status.value = ApiStatus.LOADING
             try {
-                dataDaily.value = DailyApi.service.getDaily(userId)
+                val response = DailyApi.service.getDaily("null")
+                dataDaily.value = response.logs
                 status.value = ApiStatus.SUCCESS
+                Log.d("MainViewModel", "Result: ${response}")
             }catch (e: Exception){
                 Log.d("MainViewModel", "Failure: ${e.message}")
                 status.value = ApiStatus.FAILED
@@ -45,14 +47,13 @@ class MainViewModel(private val dao: HarianDao) : ViewModel() {
         }
     }
 
-    fun saveData(userId: String, judul: String, hari: String, daily: String, bitmap: Bitmap){
+    fun saveData(userId: String, title: String, mood: String, bitmap: Bitmap){
         viewModelScope.launch (Dispatchers.IO){
             try {
                 val result = DailyApi.service.postDaily(
                     userId,
-                    judul.toRequestBody("text/plain".toMediaTypeOrNull()),
-                    hari.toRequestBody("text/plain".toMediaTypeOrNull()),
-                    daily.toRequestBody("text/plain".toMediaTypeOrNull()),
+                    title.toRequestBody("text/plain".toMediaTypeOrNull()),
+                    mood.toRequestBody("text/plain".toMediaTypeOrNull()),
                     bitmap.toMultipartBody()
                 )
                 if (result.status == "success")
@@ -61,6 +62,22 @@ class MainViewModel(private val dao: HarianDao) : ViewModel() {
                     throw Exception(result.message)
             }catch (e: Exception){
                 Log.d("MainViewModel", "Failure: ${e.message}")
+            }
+        }
+    }
+
+    fun deleteData(userId: String, id: String) {
+        viewModelScope.launch(Dispatchers.IO){
+            try {
+                val result = DailyApi.service.deleteDaily(userId, id)
+                if (result.status == "success")
+                    retrieveData(userId)
+
+                else
+                    throw Exception(result.message)
+            } catch (e: Exception) {
+                Log.d("MainViewModel", "Failure: ${e.message}")
+                erroMassage.value = "Error: ${e.message}"
             }
         }
     }

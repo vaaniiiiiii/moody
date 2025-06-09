@@ -120,24 +120,6 @@ fun MoodyScreen(navController: NavHostController) {
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
-                    IconButton(onClick = {
-                        navController.navigate(Screen.About.route)
-                    }) {
-                        Icon(
-                            imageVector = Icons.Outlined.Info,
-                            contentDescription = stringResource(R.string.tentang_aplikasi),
-                            tint = MaterialTheme.colorScheme.onPrimary
-                        )
-                    }
-                    IconButton(onClick = {
-                        navController.navigate(Screen.Gambar.route)
-                    }) {
-                        Icon(
-                            imageVector = Icons.Outlined.Face,
-                            contentDescription = stringResource(R.string.Gambar),
-                            tint = MaterialTheme.colorScheme.onPrimary
-                        )
-                    }
                 }
             )
         },

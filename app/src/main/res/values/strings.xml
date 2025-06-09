@@ -77,5 +77,6 @@
     <string name="judulDaily">Title</string>
     <string name="Hari">Day</string>
     <string name="Daily">Activities</string>
+    <string name="hapus_daily">Delete this Daily Update?</string>
 
 </resources>

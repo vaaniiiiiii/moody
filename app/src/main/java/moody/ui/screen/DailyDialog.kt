@@ -23,7 +23,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -37,11 +36,10 @@ import moody.ui.theme.MoodyTheme
 fun DailyDialog(
     bitmap: Bitmap?,
     onDismissRequest: () -> Unit,
-    onConfirmation: (String, String, String) -> Unit
+    onConfirmation: (String, String) -> Unit
 ){
-    var judul by remember { mutableStateOf("") }
-    var hari by remember { mutableStateOf("") }
-    var daily by remember { mutableStateOf("") }
+    var title by remember { mutableStateOf("") }
+    var mood by remember { mutableStateOf("") }
 
     Dialog(onDismissRequest = {onDismissRequest()}) {
         Card(
@@ -58,8 +56,8 @@ fun DailyDialog(
                     modifier = Modifier.fillMaxWidth().aspectRatio(1f)
                 )
                 OutlinedTextField(
-                    value = judul,
-                    onValueChange = {judul = it},
+                    value = title,
+                    onValueChange = {title = it},
                     label = { Text(text = stringResource(id = R.string.judul)) },
                     maxLines = 1,
                     keyboardOptions = KeyboardOptions(
@@ -69,24 +67,13 @@ fun DailyDialog(
                     modifier = Modifier.padding(top = 8.dp)
                 )
                 OutlinedTextField(
-                    value = hari,
-                    onValueChange = {hari = it},
+                    value = mood,
+                    onValueChange = {mood = it},
                     label = { Text(text = stringResource(id = R.string.Hari)) },
                     maxLines = 1,
                     keyboardOptions = KeyboardOptions(
                         capitalization = KeyboardCapitalization.Words,
                         imeAction = ImeAction.Next
-                    ),
-                    modifier = Modifier.padding(top = 8.dp)
-                )
-                OutlinedTextField(
-                    value = daily,
-                    onValueChange = {daily = it},
-                    label = { Text(text = stringResource(id = R.string.Daily)) },
-                    maxLines = 3,
-                    keyboardOptions = KeyboardOptions(
-                        capitalization = KeyboardCapitalization.Sentences,
-                        imeAction = ImeAction.Done
                     ),
                     modifier = Modifier.padding(top = 8.dp)
                 )
@@ -101,8 +88,8 @@ fun DailyDialog(
                         Text(text = stringResource(R.string.tombol_batal))
                     }
                     OutlinedButton(
-                        onClick = {onConfirmation(judul, hari, daily)},
-                        enabled = judul.isNotEmpty() && hari.isNotEmpty() && daily.isNotEmpty(),
+                        onClick = {onConfirmation(title, mood)},
+                        enabled = title.isNotEmpty() && mood.isNotEmpty(),
                         modifier = Modifier.padding(8.dp)
                     ) {
                         Text(text = stringResource(R.string.simpan))
@@ -121,7 +108,7 @@ fun AddDialogPreview(){
         DailyDialog(
             bitmap = null,
             onDismissRequest = {},
-            onConfirmation = { _, _, _ -> }
+            onConfirmation = { _, _,-> }
         )
     }
 }
