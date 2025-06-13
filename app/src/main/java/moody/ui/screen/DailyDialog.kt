@@ -17,7 +17,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -48,6 +52,7 @@ import moody.ui.theme.MoodyTheme
 fun DailyDialog(
     bitmap: Bitmap?,
     imageUrl: String? = null,
+    onImageEdit:() -> Unit,
     titleInitial: String = "",
     moodInitial: String = "",
     onDismissRequest: () -> Unit,
@@ -61,8 +66,6 @@ fun DailyDialog(
         stringResource(id = R.string.senang),
         stringResource(id = R.string.sedih)
     )
-
-
 
     Dialog(onDismissRequest = { onDismissRequest()}) {
         Card(
@@ -94,6 +97,13 @@ fun DailyDialog(
                             modifier = Modifier.fillMaxWidth().aspectRatio(1f)
                         )
                     }
+                    IconButton(onClick = onImageEdit) {
+                                Icon(
+                                    imageVector = Icons.Default.Edit,
+                                    contentDescription = stringResource(id = R.string.update_image),
+                                    tint = Color.Black
+                                )
+                    }
                 }
                 OutlinedTextField(
                     value = title,
@@ -113,7 +123,7 @@ fun DailyDialog(
                         .padding(8.dp)
                 ) {
                     radioOptions.forEach { text ->
-                        HabitatOption(
+                        MoodOptiond(
                             label = text,
                             isSelected = mood == text,
                             modifier = Modifier
@@ -155,7 +165,7 @@ fun DailyDialog(
 }
 
 @Composable
-fun HabitatOption(
+fun MoodOptiond(
     label: String,
     isSelected: Boolean,
     modifier: Modifier = Modifier
@@ -187,6 +197,7 @@ fun AddDialogPreview() {
     MoodyTheme  {
         DailyDialog (
             bitmap = null,
+            onImageEdit = {},
             titleInitial = "rapat",
             moodInitial = "senang",
             onDismissRequest = {},

@@ -18,8 +18,11 @@ import moody.network.ApiStatus
 import moody.network.DailyApi
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 
 class MainViewModel(private val dao: HarianDao) : ViewModel() {
 
@@ -70,6 +73,35 @@ class MainViewModel(private val dao: HarianDao) : ViewModel() {
                 Log.d("MainViewModel", "Failure: ${e.message}")
             }
         }
+    }
+
+    fun updateData(userId: String, id: String, title: String, mood: String, bitmap: Bitmap?) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val titlePart = title.toRequestBody("text/plain".toMediaTypeOrNull())
+                val moodPart = mood.toRequestBody("text/plain".toMediaTypeOrNull())
+
+                val image = bitmap?.let {
+                    val file = File.createTempFile("image", ".jpg")
+                    val out = FileOutputStream(file)
+                    it.compress(Bitmap.CompressFormat.JPEG, 100, out)
+                    out.flush()
+                    out.close()
+
+                    val requestFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+                    MultipartBody.Part.createFormData("image", file.name, requestFile)
+                }
+
+                DailyApi.service.updateDaily(id, titlePart, moodPart, image)
+
+                Log.d("MainViewModel", "Data berhasil diupdate untuk ID: $id")
+                retrieveData(userId)
+            } catch (e: Exception) {
+                Log.e("MainViewModel", "Gagal update data: ${e.message}")
+            }
+
+        }
+
     }
 
     fun deleteData(userId: String, id: String) {

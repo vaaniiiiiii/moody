@@ -27,6 +27,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -103,14 +104,31 @@ fun GambarScreen (navController: NavHostController) {
     var showDialog by remember { mutableStateOf(false) }
     var showDailyDialog by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
-    var deletedDailyId by remember { mutableStateOf("") }
+    var selectedBitmap by remember { mutableStateOf<Bitmap?>(null) }
+    var showEditDialog by remember { mutableStateOf(false) }
 
     var seletedDaily by remember { mutableStateOf<Gambar?>(null) }
 
     var bitmap: Bitmap? by remember { mutableStateOf(null) }
+
     val launcher = rememberLauncherForActivityResult(CropImageContract()) {
         bitmap = getCroppedImage(context.contentResolver, it)
         if (bitmap != null) showDailyDialog = true
+    }
+    val launcherEdit = rememberLauncherForActivityResult(CropImageContract()) { result ->
+                if (result.isSuccessful) {
+                    result.uriContent?.let { uri ->
+                        selectedBitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                            val source = ImageDecoder.createSource(context.contentResolver, uri)
+                            ImageDecoder.decodeBitmap(source)
+                        } else {
+                            @Suppress("DEPRECATION")
+                            MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
+                        }
+                    }
+                } else {
+                    Log.e("CropError", "Crop gagal: ${result.error}")
+                }
     }
 
     Scaffold(
@@ -182,8 +200,11 @@ fun GambarScreen (navController: NavHostController) {
             onDelete = {Gambar ->
             seletedDaily = Gambar
             showDeleteDialog = true
-        })
-
+        },
+            onEdit = {Gambar ->
+                seletedDaily = Gambar
+                showEditDialog = true
+            })
         if (showDialog){
             ProfilDialog(
                 user = user,
@@ -195,10 +216,54 @@ fun GambarScreen (navController: NavHostController) {
         if (showDailyDialog){
             DailyDialog(
                 bitmap = bitmap,
-                onDismissRequest = {showDailyDialog = false}) { title, mood ->
+                onDismissRequest = {showDailyDialog = false},
+                onImageEdit = {
+                    val option = CropImageContractOptions(
+                        null, CropImageOptions(
+                            imageSourceIncludeGallery = false,
+                            imageSourceIncludeCamera = true,
+                            fixAspectRatio = true
+                        )
+                    )
+                    launcher.launch(option)
+                }
+            ) { title, mood ->
                 viewModel.saveData(user.email, title, mood, bitmap!!)
                 showDailyDialog = false
             }
+        }
+        if (showEditDialog && seletedDaily != null) {
+            Log.d("EditDialog", "Menampilkan dialog edit Daily: ${seletedDaily!!.title}")
+            Log.d("EditDialog", "imageUlr diterima: ${seletedDaily!!.imageUrl}")
+            Log.d("EditDialog", "mood: ${seletedDaily!!.mood}, habitat: ${seletedDaily!!.mood}")
+            DailyDialog (
+                bitmap = selectedBitmap,
+                imageUrl = seletedDaily!!.imageUrl.replace("http", "https"),
+                titleInitial = seletedDaily!!.title,
+                moodInitial = seletedDaily!!.mood,
+                onDismissRequest = { showEditDialog = false },
+                onImageEdit =   {
+                    val option = CropImageContractOptions(
+                        null, CropImageOptions(
+                            imageSourceIncludeGallery = false,
+                            imageSourceIncludeCamera = true,
+                            fixAspectRatio = true
+                        )
+                    )
+                    launcherEdit.launch(option)
+                },
+                onConfirmation = { title, mood ->
+                    viewModel.updateData(
+                        userId = user.email,
+                        id = seletedDaily!!.id,
+                        title = title,
+                        mood = mood,
+                        selectedBitmap
+                    )
+                    selectedBitmap = null
+                    showEditDialog = false
+                }
+            )
         }
 
         if (showDeleteDialog) {
@@ -219,7 +284,7 @@ fun GambarScreen (navController: NavHostController) {
 }
 
 @Composable
-fun GambarContent (viewModel: MainViewModel,userId: String, modifier: Modifier = Modifier, onDelete: (Gambar) -> Unit){
+fun GambarContent (viewModel: MainViewModel,userId: String, modifier: Modifier = Modifier, onDelete: (Gambar) -> Unit, onEdit: (Gambar) -> Unit){
 
     val dataDaily by viewModel.dataDaily
     val status by viewModel.status.collectAsState()
@@ -248,6 +313,7 @@ fun GambarContent (viewModel: MainViewModel,userId: String, modifier: Modifier =
                     ListItem(
                         daily = daily,
                         onDelete = {onDelete(daily) },
+                        onEdit = {onEdit(daily)}
 
                     )
                 }
@@ -273,7 +339,7 @@ fun GambarContent (viewModel: MainViewModel,userId: String, modifier: Modifier =
 }
 
 @Composable
-fun ListItem(daily: Gambar, onDelete: (String) -> Unit, showDeleteButton: Boolean = false) {
+fun ListItem(daily: Gambar, onDelete: () -> Unit, onEdit: () -> Unit) {
     val context = LocalContext.current
     val dataStore = UserDataStore(context)
     val user by dataStore.userFlow.collectAsState(User())
@@ -281,7 +347,8 @@ fun ListItem(daily: Gambar, onDelete: (String) -> Unit, showDeleteButton: Boolea
     val sharedPreferences = context.getSharedPreferences("user_session", Context.MODE_PRIVATE)
     sharedPreferences.edit().putString("userId", daily.userId).apply()
     val userId = sharedPreferences.getString("userId", "") ?: ""
-Box(
+
+    Box(
         modifier = Modifier.padding(4.dp).border(1.dp, Color.Gray),
         contentAlignment = Alignment.BottomCenter
     ) {
@@ -296,15 +363,21 @@ Box(
             error = painterResource(id = R.drawable.baseline_broken_image_24),
             modifier = Modifier.fillMaxWidth().padding(4.dp)
         )
-        Row (
-            modifier = Modifier.fillMaxWidth().padding(4.dp)
+
+        Column(
+            modifier = Modifier.fillMaxWidth().padding()
                 .background(Color(red = 0f, green = 0f, blue = 0f, alpha = 0.5f))
                 .padding(4.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+
+        Row (
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
 
         ) {
-            Column {
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
                 Text(
                     text = daily.title,
                     fontWeight = FontWeight.Bold,
@@ -317,15 +390,24 @@ Box(
                     color = Color.White
                 )
             }
+
             if (isLoggiedIn && userId == user.email) {
-                IconButton(onClick = {onDelete("delete")}) {
+                IconButton(onClick = { onDelete() }) {
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = stringResource(id = R.string.hapus),
                         tint = Color.White
                     )
                 }
+                IconButton(onClick = { onEdit() }) {
+                    Icon(
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = stringResource(id = R.string.edit),
+                        tint = Color.White
+                    )
 
+                }
+            }
         }
     }
 }

@@ -80,5 +80,7 @@
     <string name="Daily">Kegiatan</string>
     <string name="hapus_daily">Hapus update harian ini?</string>
     <string name="title">Kegiatan</string>
+    <string name="edit">Edit</string>
+    <string name="update_image">Edit Foto</string>
 
 </resources>
