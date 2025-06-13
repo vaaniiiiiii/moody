@@ -48,6 +48,10 @@ class MainViewModel(private val dao: HarianDao) : ViewModel() {
     }
 
     fun saveData(userId: String, title: String, mood: String, bitmap: Bitmap){
+        if (userId.isNullOrBlank()) {
+            erroMassage.value = "Anda harus login terlebih dahulu"
+            return
+        }
         viewModelScope.launch (Dispatchers.IO){
             try {
                 val result = DailyApi.service.postDaily(
@@ -56,8 +60,10 @@ class MainViewModel(private val dao: HarianDao) : ViewModel() {
                     mood.toRequestBody("text/plain".toMediaTypeOrNull()),
                     bitmap.toMultipartBody()
                 )
-                if (result.status == "success")
+                if (result.status == "201") {
+                    Log.d("MainViwModel", "failure: ${result.message}")
                     retrieveData(userId)
+                }
                 else
                     throw Exception(result.message)
             }catch (e: Exception){
@@ -69,15 +75,11 @@ class MainViewModel(private val dao: HarianDao) : ViewModel() {
     fun deleteData(userId: String, id: String) {
         viewModelScope.launch(Dispatchers.IO){
             try {
-                val result = DailyApi.service.deleteDaily(userId, id)
-                if (result.status == "success")
-                    retrieveData(userId)
-
-                else
-                    throw Exception(result.message)
+                DailyApi.service.deleteDaily(id)
+                Log.d("MainViewModel", "Data berhasil dihapus dengan ID: $id")
+                retrieveData(userId)
             } catch (e: Exception) {
-                Log.d("MainViewModel", "Failure: ${e.message}")
-                erroMassage.value = "Error: ${e.message}"
+                Log.e("MainViewModel", "Gagal menghapus data: ${e.message}")
             }
         }
     }

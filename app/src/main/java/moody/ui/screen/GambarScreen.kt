@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
@@ -104,6 +105,8 @@ fun GambarScreen (navController: NavHostController) {
     var showDeleteDialog by remember { mutableStateOf(false) }
     var deletedDailyId by remember { mutableStateOf("") }
 
+    var seletedDaily by remember { mutableStateOf<Gambar?>(null) }
+
     var bitmap: Bitmap? by remember { mutableStateOf(null) }
     val launcher = rememberLauncherForActivityResult(CropImageContract()) {
         bitmap = getCroppedImage(context.contentResolver, it)
@@ -175,8 +178,9 @@ fun GambarScreen (navController: NavHostController) {
             }
         }
     ) { innerPadding ->
-        GambarContent(viewModel, user.email, Modifier.padding(innerPadding), onDelete = {id ->
-            deletedDailyId = id
+        GambarContent(viewModel, user.email, Modifier.padding(innerPadding),
+            onDelete = {Gambar ->
+            seletedDaily = Gambar
             showDeleteDialog = true
         })
 
@@ -196,15 +200,17 @@ fun GambarScreen (navController: NavHostController) {
                 showDailyDialog = false
             }
         }
+
         if (showDeleteDialog) {
             DialogHapus(
                 onDismissRequest = { showDeleteDialog = false },
                 onConfirm = {
-                    viewModel.deleteData(user.email, deletedDailyId)
+                    seletedDaily?.let { viewModel.deleteData(user.email, it.id) }
                     showDeleteDialog = false
                 }
             )
         }
+
         if (errorMessage != null){
             Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
             viewModel.clearMessage()
@@ -213,7 +219,7 @@ fun GambarScreen (navController: NavHostController) {
 }
 
 @Composable
-fun GambarContent (viewModel: MainViewModel,userId: String, modifier: Modifier = Modifier, onDelete: (String) -> Unit){
+fun GambarContent (viewModel: MainViewModel,userId: String, modifier: Modifier = Modifier, onDelete: (Gambar) -> Unit){
 
     val dataDaily by viewModel.dataDaily
     val status by viewModel.status.collectAsState()
@@ -238,12 +244,11 @@ fun GambarContent (viewModel: MainViewModel,userId: String, modifier: Modifier =
                 columns = GridCells.Fixed(2),
                 contentPadding = PaddingValues(bottom = 80.dp)
             ) {
-                items(dataDaily.size) {index ->
-                    val daily = dataDaily[index]
+                items(dataDaily) {daily ->
                     ListItem(
                         daily = daily,
-                        onDeleteClick = onDelete,
-                        showDeleteButton = (index >= 2 )
+                        onDelete = {onDelete(daily) },
+
                     )
                 }
             }
@@ -268,8 +273,15 @@ fun GambarContent (viewModel: MainViewModel,userId: String, modifier: Modifier =
 }
 
 @Composable
-fun ListItem(daily: Gambar, onDeleteClick: (String) -> Unit, showDeleteButton: Boolean = false) {
-    Box(
+fun ListItem(daily: Gambar, onDelete: (String) -> Unit, showDeleteButton: Boolean = false) {
+    val context = LocalContext.current
+    val dataStore = UserDataStore(context)
+    val user by dataStore.userFlow.collectAsState(User())
+    val isLoggiedIn = user.email.isNotEmpty()
+    val sharedPreferences = context.getSharedPreferences("user_session", Context.MODE_PRIVATE)
+    sharedPreferences.edit().putString("userId", daily.userId).apply()
+    val userId = sharedPreferences.getString("userId", "") ?: ""
+Box(
         modifier = Modifier.padding(4.dp).border(1.dp, Color.Gray),
         contentAlignment = Alignment.BottomCenter
     ) {
@@ -305,17 +317,18 @@ fun ListItem(daily: Gambar, onDeleteClick: (String) -> Unit, showDeleteButton: B
                     color = Color.White
                 )
             }
-            if (showDeleteButton) {
-                IconButton(onClick = {onDeleteClick(daily.id)}) {
+            if (isLoggiedIn && userId == user.email) {
+                IconButton(onClick = {onDelete("delete")}) {
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = stringResource(id = R.string.hapus),
                         tint = Color.White
                     )
                 }
-            }
+
         }
     }
+}
 }
 
 private suspend fun signIn(context: Context, dataStore: UserDataStore){

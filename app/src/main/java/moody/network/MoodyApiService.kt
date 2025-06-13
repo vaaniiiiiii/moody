@@ -47,9 +47,8 @@ interface MoodyApiService {
 
     @DELETE("logs/{id}")
     suspend fun deleteDaily(
-        @Header("Authorization") userId: String,
         @Path("id") id: String
-    ): OpStatus
+    ): Unit
 }
 
 object DailyApi {

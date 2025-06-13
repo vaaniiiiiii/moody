@@ -9,6 +9,7 @@ data class ApiResponse(
 
 data class Gambar(
     val id: String,
+    val userId: String?,
     val title: String,
     val mood: String,
     val imageUrl: String
