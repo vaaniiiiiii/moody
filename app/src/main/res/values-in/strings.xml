@@ -79,5 +79,6 @@
     <string name="Hari">Hari</string>
     <string name="Daily">Kegiatan</string>
     <string name="hapus_daily">Hapus update harian ini?</string>
+    <string name="title">Kegiatan</string>
 
 </resources>

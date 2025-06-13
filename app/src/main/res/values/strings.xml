@@ -78,5 +78,6 @@
     <string name="Hari">Day</string>
     <string name="Daily">Activities</string>
     <string name="hapus_daily">Delete this Daily Update?</string>
+    <string name="title">Activities</string>
 
 </resources>
