@@ -39,7 +39,7 @@ interface MoodyApiService {
     @Multipart
     @POST("logs")
     suspend fun postDaily(
-        @Header("Authorization") userId: String,
+        @Part("userId") userId: RequestBody,
         @Part("title") title: RequestBody,
         @Part("mood") mood: RequestBody,
         @Part image: MultipartBody.Part

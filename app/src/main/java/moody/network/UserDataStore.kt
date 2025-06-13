@@ -35,7 +35,6 @@ class UserDataStore (private val context: Context) {
             preferences[USER_NAME] = user.name
             preferences[USER_EMAIL] = user.email
             preferences[USER_PHOTO] = user.photoUrl
-
         }
     }
 }

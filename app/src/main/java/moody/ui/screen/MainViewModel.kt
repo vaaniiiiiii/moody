@@ -36,10 +36,10 @@ class MainViewModel(private val dao: HarianDao) : ViewModel() {
         viewModelScope.launch (Dispatchers.IO){
             status.value = ApiStatus.LOADING
             try {
-                val response = DailyApi.service.getDaily("null")
+                val response = DailyApi.service.getDaily(userId)
                 dataDaily.value = response.logs
                 status.value = ApiStatus.SUCCESS
-                Log.d("MainViewModel", "Result: ${response}")
+                Log.d("MainViewModel", "Result: ${response}") 
             }catch (e: Exception){
                 Log.d("MainViewModel", "Failure: ${e.message}")
                 status.value = ApiStatus.FAILED
@@ -51,7 +51,7 @@ class MainViewModel(private val dao: HarianDao) : ViewModel() {
         viewModelScope.launch (Dispatchers.IO){
             try {
                 val result = DailyApi.service.postDaily(
-                    userId,
+                    userId.toRequestBody("text/plain".toMediaTypeOrNull()),
                     title.toRequestBody("text/plain".toMediaTypeOrNull()),
                     mood.toRequestBody("text/plain".toMediaTypeOrNull()),
                     bitmap.toMultipartBody()
